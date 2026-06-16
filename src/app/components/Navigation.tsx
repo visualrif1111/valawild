@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react';
 import svgPaths from '../../imports/Frame74/svg-1cztk30jkf';
 
 export function Navigation() {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -22,7 +24,7 @@ export function Navigation() {
     <div className="fixed top-0 left-0 w-full z-50 pointer-events-none">
       <AnimatePresence>
         {!isScrolled ? (
-          <motion.nav 
+          <motion.nav
             key="nav-initial"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -46,31 +48,40 @@ export function Navigation() {
               </div>
 
               {/* Logo */}
-              <h1 className="font-['Italiana',sans-serif] text-2xl md:text-3xl lg:text-[42px] text-white tracking-[0.1em] leading-none mb-4">
+              <Link to="/" className="font-['Italiana',sans-serif] text-2xl md:text-3xl lg:text-[42px] text-white tracking-[0.1em] leading-none mb-4 hover:opacity-80 transition-opacity duration-300">
                 VALA WILD
-              </h1>
+              </Link>
 
               {/* Divider Line */}
               <div className="w-[300px] md:w-[450px] h-[1px] bg-white/60 mb-6" />
 
               {/* Links */}
               <div className="flex items-center gap-6 md:gap-12 font-['Kufam',sans-serif] text-xs md:text-sm lg:text-base text-white tracking-widest uppercase">
-                <a href="#" className="hover:opacity-70 transition-opacity duration-300">
+                <Link
+                  to="/"
+                  className={`transition-opacity duration-300 ${location.pathname === '/' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                >
                   Safari
-                </a>
+                </Link>
                 <div className="w-[1px] h-6 bg-white/60" />
-                <a href="#" className="hover:opacity-70 transition-opacity duration-300">
+                <Link
+                  to="/kilimanjaro"
+                  className={`transition-opacity duration-300 ${location.pathname === '/kilimanjaro' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                >
                   Mount Kilimanjaro
-                </a>
+                </Link>
                 <div className="w-[1px] h-6 bg-white/60" />
-                <a href="#" className="hover:opacity-70 transition-opacity duration-300">
+                <Link
+                  to="/zanzibar"
+                  className={`transition-opacity duration-300 ${location.pathname === '/zanzibar' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                >
                   Zanzibar
-                </a>
+                </Link>
               </div>
             </div>
           </motion.nav>
         ) : (
-          <motion.nav 
+          <motion.nav
             key="nav-scrolled"
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,22 +91,29 @@ export function Navigation() {
           >
             {/* Left Side: Logo and Links */}
             <div className="flex flex-col items-start gap-4">
-              {/* Logo */}
-              <h1 className="font-['Italiana',sans-serif] text-2xl md:text-3xl lg:text-[42px] text-white tracking-[0.1em] leading-none m-0">
+              <Link to="/" className="font-['Italiana',sans-serif] text-2xl md:text-3xl lg:text-[42px] text-white tracking-[0.1em] leading-none m-0 hover:opacity-80 transition-opacity duration-300">
                 VALA WILD
-              </h1>
+              </Link>
 
-              {/* Links */}
               <div className="hidden md:flex flex-col items-start gap-3 font-['Kufam',sans-serif] text-xs md:text-sm lg:text-base text-white tracking-widest uppercase mt-2">
-                <a href="#" className="hover:opacity-70 transition-opacity duration-300">
+                <Link
+                  to="/"
+                  className={`transition-opacity duration-300 ${location.pathname === '/' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                >
                   Safari
-                </a>
-                <a href="#" className="hover:opacity-70 transition-opacity duration-300">
+                </Link>
+                <Link
+                  to="/kilimanjaro"
+                  className={`transition-opacity duration-300 ${location.pathname === '/kilimanjaro' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                >
                   Mount Kilimanjaro
-                </a>
-                <a href="#" className="hover:opacity-70 transition-opacity duration-300">
+                </Link>
+                <Link
+                  to="/zanzibar"
+                  className={`transition-opacity duration-300 ${location.pathname === '/zanzibar' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                >
                   Zanzibar
-                </a>
+                </Link>
               </div>
             </div>
 
