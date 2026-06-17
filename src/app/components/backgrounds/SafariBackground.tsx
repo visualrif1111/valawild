@@ -11,22 +11,26 @@ import Frame70 from '../../../imports/Frame70-1/index';
 import Frame73 from '../../../imports/Frame73/index';
 
 export default function SafariBackground() {
-  const { scrollYProgress } = useScroll({
-    offset: ["start start", "end end"]
-  });
+  const { scrollYProgress } = useScroll({ offset: ["start start", "end end"] });
 
-  const yStack = useTransform(scrollYProgress, [0, 1], ["0vh", "-800vh"]);
+  // ── Spring-smoothed scroll — inertia / drift feel ───────────────────────────
+  const scrollYSmooth = useSpring(scrollYProgress, { damping: 20, stiffness: 65, mass: 0.8 });
 
-  const scaleBg1 = useTransform(scrollYProgress, [0, 1/8], [1, 1.15]);
-  const scaleBg2 = useTransform(scrollYProgress, [0, 1/8, 2/8], [1.15, 1, 1.15]);
-  const scaleBg3 = useTransform(scrollYProgress, [1/8, 2/8, 3/8], [1.15, 1, 1.15]);
-  const scaleBg4 = useTransform(scrollYProgress, [2/8, 3/8, 4/8], [1.15, 1, 1.15]);
-  const scaleBg5 = useTransform(scrollYProgress, [3/8, 4/8, 5/8], [1.15, 1, 1.15]);
-  const scaleBg6 = useTransform(scrollYProgress, [4/8, 5/8, 6/8], [1.15, 1, 1.15]);
-  const scaleBg7 = useTransform(scrollYProgress, [5/8, 6/8, 7/8], [1.15, 1, 1.15]);
-  const scaleBg8 = useTransform(scrollYProgress, [6/8, 7/8, 1], [1.15, 1, 1.15]);
-  const scaleBg9 = useTransform(scrollYProgress, [7/8, 1], [1.15, 1]);
+  // ── Scene stack scrolls through via spring (smooth momentum) ────────────────
+  const yStack = useTransform(scrollYSmooth, [0, 1], ["0vh", "-800vh"]);
 
+  // ── Per-scene scale on smooth scroll ────────────────────────────────────────
+  const scaleBg1 = useTransform(scrollYSmooth, [0, 1/8],           [1, 1.15]);
+  const scaleBg2 = useTransform(scrollYSmooth, [0, 1/8, 2/8],      [1.15, 1, 1.15]);
+  const scaleBg3 = useTransform(scrollYSmooth, [1/8, 2/8, 3/8],    [1.15, 1, 1.15]);
+  const scaleBg4 = useTransform(scrollYSmooth, [2/8, 3/8, 4/8],    [1.15, 1, 1.15]);
+  const scaleBg5 = useTransform(scrollYSmooth, [3/8, 4/8, 5/8],    [1.15, 1, 1.15]);
+  const scaleBg6 = useTransform(scrollYSmooth, [4/8, 5/8, 6/8],    [1.15, 1, 1.15]);
+  const scaleBg7 = useTransform(scrollYSmooth, [5/8, 6/8, 7/8],    [1.15, 1, 1.15]);
+  const scaleBg8 = useTransform(scrollYSmooth, [6/8, 7/8, 1],      [1.15, 1, 1.15]);
+  const scaleBg9 = useTransform(scrollYSmooth, [7/8, 1],           [1.15, 1]);
+
+  // ── Scene visibility — raw scroll keeps show/hide crisp ─────────────────────
   const displayBg1 = useTransform(scrollYProgress, v => v <= 1.5/8 ? "flex" : "none");
   const displayBg2 = useTransform(scrollYProgress, v => v <= 2.5/8 ? "flex" : "none");
   const displayBg3 = useTransform(scrollYProgress, v => v >= 0.5/8 && v <= 3.5/8 ? "flex" : "none");
@@ -37,9 +41,13 @@ export default function SafariBackground() {
   const displayBg8 = useTransform(scrollYProgress, v => v >= 5.5/8 ? "flex" : "none");
   const displayBg9 = useTransform(scrollYProgress, v => v >= 6.5/8 ? "flex" : "none");
 
+  // ── Parallax depth offsets (raw — layers separate crisply from bg) ──────────
+  const yMid  = useTransform(scrollYProgress, [0, 1], ['0vh',  '-80vh']);
+  const yFore = useTransform(scrollYProgress, [0, 1], ['0vh', '-160vh']);
+
+  // ── Mouse parallax ─────────────────────────────────────────────────────────
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX / window.innerWidth);
@@ -48,17 +56,16 @@ export default function SafariBackground() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
-
   const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 400 });
   const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 400 });
+  const parallaxX_bg  = useTransform(smoothMouseX, [0, 1], ["-1%",  "1%"]);
+  const parallaxY_bg  = useTransform(smoothMouseY, [0, 1], ["-1%",  "1%"]);
+  const parallaxX_fg1 = useTransform(smoothMouseX, [0, 1], ["-3%",  "3%"]);
+  const parallaxY_fg1 = useTransform(smoothMouseY, [0, 1], ["-3%",  "3%"]);
+  const parallaxX_fg2 = useTransform(smoothMouseX, [0, 1], ["4%",  "-4%"]);
+  const parallaxY_fg2 = useTransform(smoothMouseY, [0, 1], ["4%",  "-4%"]);
 
-  const parallaxX_bg = useTransform(smoothMouseX, [0, 1], ["-1%", "1%"]);
-  const parallaxY_bg = useTransform(smoothMouseY, [0, 1], ["-1%", "1%"]);
-  const parallaxX_fg1 = useTransform(smoothMouseX, [0, 1], ["-3%", "3%"]);
-  const parallaxY_fg1 = useTransform(smoothMouseY, [0, 1], ["-3%", "3%"]);
-  const parallaxX_fg2 = useTransform(smoothMouseX, [0, 1], ["4%", "-4%"]);
-  const parallaxY_fg2 = useTransform(smoothMouseY, [0, 1], ["4%", "-4%"]);
-
+  // ── Flash overlay — raw scroll, crisp cuts ───────────────────────────────────
   const opacityOverlay = useTransform(
     scrollYProgress,
     [0, 1/16, 2/16, 3/16, 4/16, 5/16, 6/16, 7/16, 8/16, 9/16, 10/16, 11/16, 12/16, 13/16, 14/16, 15/16, 1],
@@ -66,8 +73,11 @@ export default function SafariBackground() {
   );
 
   return (
-    <div className="relative w-full h-[3600vh] bg-[#2A0F0A]">
+    // 2000vh — faster scene traversal (~1.8× vs 3600vh)
+    <div className="relative w-full h-[2000vh] bg-[#2A0F0A]">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
+
+        {/* ── LAYER 1 — Scene stack (spring scroll + mouse parallax) ─────────── */}
         <motion.div style={{ y: parallaxY_bg }} className="absolute inset-0">
           <motion.div style={{ y: yStack, x: parallaxX_bg }} className="absolute top-0 left-0 w-full h-[900vh] will-change-transform">
 
@@ -171,73 +181,77 @@ export default function SafariBackground() {
           </motion.div>
         </motion.div>
 
+        {/* ── Flash overlay — raw scroll, crisp cuts ───────────────────────────── */}
         <motion.div
           style={{ opacity: opacityOverlay }}
           className="absolute inset-0 bg-[#2A0F0A] pointer-events-none mix-blend-multiply z-20"
         />
 
-        {/* Warm light formation */}
-        <motion.div
-          style={{ x: parallaxX_fg1, y: parallaxY_fg1 }}
-          className="absolute top-[10%] left-[20%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] rounded-full mix-blend-overlay pointer-events-auto cursor-pointer"
-          whileHover={{ scale: 1.05, filter: "brightness(1.5)" }}
-        >
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FFFFF0] to-transparent opacity-30 blur-3xl" />
-          <motion.div
-            animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-[10%] rounded-full bg-gradient-to-br from-[#FFBF00] to-transparent opacity-40 blur-2xl"
-          />
-        </motion.div>
-
-        {/* Floating organic shapes */}
-        <motion.div style={{ x: parallaxX_fg2, y: parallaxY_fg2 }} className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ x: [0, 50, 0], y: [0, -30, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={{ scale: 1.15, filter: "brightness(2)" }}
-            className="absolute top-[10%] right-[10%] w-[30vw] h-[20vw] bg-[#FFFFF0] opacity-[0.05] blur-3xl rounded-[100%_50%_70%_40%] pointer-events-auto cursor-pointer"
-          />
-          <motion.div
-            animate={{ x: [0, -40, 0], y: [0, 40, 0], rotate: [0, -5, 0] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            whileHover={{ scale: 1.15, filter: "brightness(2)" }}
-            className="absolute top-[30%] left-[5%] w-[40vw] h-[25vw] bg-[#FFBF00] opacity-[0.05] blur-3xl rounded-[40%_80%_60%_50%] pointer-events-auto cursor-pointer"
-          />
-        </motion.div>
-
-        {/* Dust particles + light beam */}
-        <motion.div style={{ x: parallaxX_fg1, y: parallaxY_fg1 }} className="absolute inset-0 pointer-events-none mix-blend-screen">
-          {Array.from({ length: 20 }).map((_, i) => (
+        {/* ── LAYER 2 — Midground organic shapes (scroll parallax: -80vh) ──────── */}
+        <motion.div style={{ y: yMid }} className="absolute inset-0 pointer-events-none z-10">
+          <motion.div style={{ x: parallaxX_fg2, y: parallaxY_fg2 }} className="absolute inset-0">
             <motion.div
-              key={i}
-              className="absolute rounded-full bg-[#FFBF00]"
-              style={{
-                width: Math.random() * 15 + 5 + 'px',
-                height: Math.random() * 15 + 5 + 'px',
-                left: Math.random() * 100 + '%',
-                top: Math.random() * 100 + '%',
-                opacity: Math.random() * 0.2 + 0.05,
-                filter: `blur(${Math.random() * 4 + 2}px)`
-              }}
-              animate={{
-                y: [0, -Math.random() * 100 - 50, 0],
-                x: [0, Math.random() * 50 - 25, 0],
-                opacity: [0.05, 0.3, 0.05],
-              }}
-              transition={{
-                duration: Math.random() * 10 + 15,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: Math.random() * 10
-              }}
+              animate={{ x: [0, 50, 0], y: [0, -30, 0], rotate: [0, 5, 0] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[10%] right-[10%] w-[30vw] h-[20vw] bg-[#FFFFF0] opacity-[0.05] blur-3xl rounded-[100%_50%_70%_40%]"
             />
-          ))}
+            <motion.div
+              animate={{ x: [0, -40, 0], y: [0, 40, 0], rotate: [0, -5, 0] }}
+              transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              className="absolute top-[30%] left-[5%] w-[40vw] h-[25vw] bg-[#FFBF00] opacity-[0.05] blur-3xl rounded-[40%_80%_60%_50%]"
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* ── LAYER 3 — Foreground warm light + dust particles (-160vh) ────────── */}
+        <motion.div style={{ y: yFore }} className="absolute inset-0 pointer-events-none z-10">
+          {/* Warm light formation */}
           <motion.div
-            className="absolute top-[-10%] left-[40%] w-[60vw] h-[150vh] bg-gradient-to-b from-[#FFFFF0]/5 to-transparent rotate-[-25deg] transform-origin-top blur-2xl"
-            animate={{ opacity: [0.1, 0.3, 0.1] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          />
+            style={{ x: parallaxX_fg1, y: parallaxY_fg1 }}
+            className="absolute top-[10%] left-[20%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] rounded-full mix-blend-overlay pointer-events-auto cursor-pointer"
+            whileHover={{ scale: 1.05, filter: "brightness(1.5)" }}
+          >
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FFFFF0] to-transparent opacity-30 blur-3xl" />
+            <motion.div
+              animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-[10%] rounded-full bg-gradient-to-br from-[#FFBF00] to-transparent opacity-40 blur-2xl"
+            />
+          </motion.div>
+
+          {/* Dust particles + light beam */}
+          <motion.div style={{ x: parallaxX_fg1, y: parallaxY_fg1 }} className="absolute inset-0 mix-blend-screen">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full bg-[#FFBF00]"
+                style={{
+                  width:   Math.random() * 15 + 5  + 'px',
+                  height:  Math.random() * 15 + 5  + 'px',
+                  left:    Math.random() * 100 + '%',
+                  top:     Math.random() * 100 + '%',
+                  opacity: Math.random() * 0.2  + 0.05,
+                  filter:  `blur(${Math.random() * 4 + 2}px)`,
+                }}
+                animate={{
+                  y: [0, -Math.random() * 100 - 50, 0],
+                  x: [0, Math.random() * 50 - 25, 0],
+                  opacity: [0.05, 0.3, 0.05],
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 15,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: Math.random() * 10,
+                }}
+              />
+            ))}
+            <motion.div
+              className="absolute top-[-10%] left-[40%] w-[60vw] h-[150vh] bg-gradient-to-b from-[#FFFFF0]/5 to-transparent rotate-[-25deg] transform-origin-top blur-2xl"
+              animate={{ opacity: [0.1, 0.3, 0.1] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
         </motion.div>
 
       </div>
