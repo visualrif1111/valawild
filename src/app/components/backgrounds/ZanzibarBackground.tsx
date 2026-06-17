@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
-import zanzibarSrc from '../../../assets/zanzibar.png';
+import zanzibarSrc from '../../../assets/ZANZIBAR.svg';
 
 const BASE_COLOR = '#061424';
 
@@ -8,7 +8,7 @@ export default function ZanzibarBackground() {
   const { scrollYProgress } = useScroll({ offset: ['start start', 'end end'] });
 
   // ── Scroll through the illustration — same mechanic as Kilimanjaro ─────────
-  // PNG at 100vw is ~502vw tall. -350vw traverses the top ~70% (ocean → reef → shore).
+  // SVG viewBox 743.97 × 3640.55 → at 100vw width, height ≈ 489vw. -350vw = top 71%.
   const yStack = useTransform(scrollYProgress, [0, 1], ['0vw', '-350vw']);
 
   // ── Scale pulses at the same 1/8 intervals as Safari/Kilimanjaro ──────────
