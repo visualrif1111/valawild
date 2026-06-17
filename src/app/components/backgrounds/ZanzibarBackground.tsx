@@ -7,8 +7,13 @@ const BASE_COLOR = '#061424';
 export default function ZanzibarBackground() {
   const { scrollYProgress } = useScroll({ offset: ['start start', 'end end'] });
 
-  // ── Spring-smoothed scroll — gives the image an inertia / drift feel ────────
-  const scrollYSmooth = useSpring(scrollYProgress, { damping: 20, stiffness: 65, mass: 0.8 });
+  // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const scrollYSmooth = useSpring(scrollYProgress,
+    isMobile
+      ? { damping: 30, stiffness: 400, mass: 0.6 }
+      : { damping: 20, stiffness: 65,  mass: 0.8 }
+  );
 
   // ── Background image — spring-driven, traverses ~90% of SVG height ──────────
   // viewBox 743.97 × 3640.55 → at 100vw, height ≈ 489vw. -440vw = 90%.
@@ -56,7 +61,7 @@ export default function ZanzibarBackground() {
 
   return (
     // 2000vh — shorter container means faster scroll traversal of the image
-    <div className="relative w-full h-[2000vh]" style={{ backgroundColor: BASE_COLOR }}>
+    <div className="relative w-full h-[600vh] md:h-[2000vh]" style={{ backgroundColor: BASE_COLOR }}>
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
 
         {/* ── LAYER 1 — Background image (spring scroll, slowest layer) ─────── */}

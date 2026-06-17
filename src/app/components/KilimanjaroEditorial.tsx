@@ -51,7 +51,7 @@ const Label = ({ children }: { children: React.ReactNode }) => (
 
 const Title = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Italiana',serif] text-[5.5vw] md:text-[3vw] lg:text-[2.2vw] leading-[1.08] text-white tracking-[0.04em]"
+    className="font-['Italiana',serif] text-[5.5vw] md:text-[22px] lg:text-[2.2vw] leading-[1.08] text-white tracking-[0.04em]"
     style={{ textShadow: '0 1px 28px rgba(5,8,16,0.7)' }}
   >
     {children}
@@ -60,7 +60,7 @@ const Title = ({ children }: { children: React.ReactNode }) => (
 
 const Body = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Cormorant_Garamond',serif] text-[3.6vw] md:text-[1.5vw] lg:text-[0.95vw] leading-[1.72] text-white/78 font-light mt-3"
+    className="font-['Cormorant_Garamond',serif] text-[4vw] md:text-[15px] lg:text-[0.95vw] leading-[1.72] text-white/78 font-light mt-3"
     style={{ textShadow: '0 1px 12px rgba(5,8,16,0.6)' }}
   >
     {children}
@@ -69,7 +69,7 @@ const Body = ({ children }: { children: React.ReactNode }) => (
 
 const Quote = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Cormorant_Garamond',serif] italic text-[4vw] md:text-[1.9vw] lg:text-[1.3vw] leading-[1.45] text-[#C8DCEE]/90 font-light mt-3 border-l border-[#7AAACE]/35 pl-4"
+    className="font-['Cormorant_Garamond',serif] italic text-[4vw] md:text-[17px] lg:text-[1.3vw] leading-[1.5] text-[#C8DCEE]/90 font-light mt-3 border-l border-[#7AAACE]/35 pl-4 text-left"
     style={{ textShadow: '0 1px 18px rgba(5,8,16,0.6)' }}
   >
     {children}
@@ -89,7 +89,8 @@ const Elevation = ({ children }: { children: React.ReactNode }) => (
 );
 
 // ── Text block positioned along the trail corridor (45–55 vw) ─────────────────
-// Left text ends at ~38 vw; right text starts at ~58 vw; centre on 50 vw.
+// Mobile  (<md): full-width, centred — sidebar columns are unreadable at 375px.
+// Desktop (md+): left ends at 38 vw; right starts at 58 vw; centre on 50 vw.
 function Waymark({
   side,
   top,
@@ -99,7 +100,7 @@ function Waymark({
   top: number;
   children: React.ReactNode;
 }) {
-  const posStyle: React.CSSProperties =
+  const desktopStyle: React.CSSProperties =
     side === 'left'
       ? { position: 'absolute', right: '62vw', top: `${top}vh`, maxWidth: 'min(30vw, 268px)' }
       : side === 'right'
@@ -112,7 +113,19 @@ function Waymark({
           maxWidth: 'min(38vw, 360px)',
           textAlign: 'center',
         };
-  return <div style={posStyle}>{children}</div>;
+  return (
+    <>
+      <div
+        className="md:hidden"
+        style={{ position: 'absolute', left: '6vw', right: '6vw', top: `${top}vh`, textAlign: 'center' }}
+      >
+        {children}
+      </div>
+      <div className="hidden md:block" style={desktopStyle}>
+        {children}
+      </div>
+    </>
+  );
 }
 
 // ── Mountain climber figure ───────────────────────────────────────────────────

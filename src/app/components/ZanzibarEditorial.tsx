@@ -52,7 +52,7 @@ const Label = ({ children }: { children: React.ReactNode }) => (
 
 const Title = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Italiana',serif] text-[5.5vw] md:text-[3vw] lg:text-[2.2vw] leading-[1.1] text-white tracking-[0.05em]"
+    className="font-['Italiana',serif] text-[5.5vw] md:text-[22px] lg:text-[2.2vw] leading-[1.1] text-white tracking-[0.05em]"
     style={{ textShadow: '0 1px 30px rgba(6,20,36,0.65)' }}
   >
     {children}
@@ -61,7 +61,7 @@ const Title = ({ children }: { children: React.ReactNode }) => (
 
 const Body = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Cormorant_Garamond',serif] text-[3.6vw] md:text-[1.5vw] lg:text-[0.95vw] leading-[1.82] text-white/76 font-light mt-3"
+    className="font-['Cormorant_Garamond',serif] text-[4vw] md:text-[15px] lg:text-[0.95vw] leading-[1.82] text-white/76 font-light mt-3"
     style={{ textShadow: '0 1px 14px rgba(6,20,36,0.55)' }}
   >
     {children}
@@ -71,7 +71,7 @@ const Body = ({ children }: { children: React.ReactNode }) => (
 // line-height slightly more generous than Safari/Kili — reflects slower pace
 const Quote = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Cormorant_Garamond',serif] italic text-[4vw] md:text-[1.9vw] lg:text-[1.3vw] leading-[1.55] text-[#A8E8DC]/88 font-light mt-4 border-l border-[#40C4CC]/32 pl-4"
+    className="font-['Cormorant_Garamond',serif] italic text-[4vw] md:text-[17px] lg:text-[1.3vw] leading-[1.55] text-[#A8E8DC]/88 font-light mt-4 border-l border-[#40C4CC]/32 pl-4 text-left"
     style={{ textShadow: '0 1px 18px rgba(6,20,36,0.55)' }}
   >
     {children}
@@ -91,8 +91,8 @@ const Whisper = ({ children }: { children: React.ReactNode }) => (
 );
 
 // ── Text block aligned to the wander corridor (42–58 vw) ─────────────────────
-// Left text ends at ~36 vw (gap before trail's ~42 vw left edge).
-// Right text starts at ~62 vw (gap after trail's ~58 vw right edge).
+// Mobile  (<md): full-width, centred — sidebar columns are unreadable at 375px.
+// Desktop (md+): left ends at 36 vw; right starts at 62 vw; centre on 50 vw.
 function Waymark({
   side,
   top,
@@ -102,7 +102,7 @@ function Waymark({
   top: number;
   children: React.ReactNode;
 }) {
-  const posStyle: React.CSSProperties =
+  const desktopStyle: React.CSSProperties =
     side === 'left'
       ? { position: 'absolute', right: '64vw', top: `${top}vh`, maxWidth: 'min(28vw, 256px)' }
       : side === 'right'
@@ -115,7 +115,19 @@ function Waymark({
           maxWidth: 'min(38vw, 360px)',
           textAlign: 'center',
         };
-  return <div style={posStyle}>{children}</div>;
+  return (
+    <>
+      <div
+        className="md:hidden"
+        style={{ position: 'absolute', left: '6vw', right: '6vw', top: `${top}vh`, textAlign: 'center' }}
+      >
+        {children}
+      </div>
+      <div className="hidden md:block" style={desktopStyle}>
+        {children}
+      </div>
+    </>
+  );
 }
 
 // ── Wanderer figure — loose linen, wide sun hat, bare-footed ease ─────────────

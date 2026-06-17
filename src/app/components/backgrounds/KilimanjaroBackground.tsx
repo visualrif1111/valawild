@@ -7,8 +7,13 @@ const BASE_COLOR = '#050810';
 export default function KilimanjaroBackground() {
   const { scrollYProgress } = useScroll({ offset: ['start start', 'end end'] });
 
-  // ── Spring-smoothed scroll — inertia / drift feel ───────────────────────────
-  const scrollYSmooth = useSpring(scrollYProgress, { damping: 20, stiffness: 65, mass: 0.8 });
+  // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const scrollYSmooth = useSpring(scrollYProgress,
+    isMobile
+      ? { damping: 30, stiffness: 400, mass: 0.6 }
+      : { damping: 20, stiffness: 65,  mass: 0.8 }
+  );
 
   // ── Background image (spring-driven, 88% SVG traversal) ─────────────────────
   // SVG viewBox 740×3692 → at 100vw, height ≈ 499vw. -440vw = 88%.
@@ -53,7 +58,7 @@ export default function KilimanjaroBackground() {
   );
 
   return (
-    <div className="relative w-full h-[2000vh]" style={{ backgroundColor: BASE_COLOR }}>
+    <div className="relative w-full h-[600vh] md:h-[2000vh]" style={{ backgroundColor: BASE_COLOR }}>
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
 
         {/* ── LAYER 1 — Background image (spring scroll, slowest) ───────────── */}

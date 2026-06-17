@@ -13,8 +13,14 @@ import Frame73 from '../../../imports/Frame73/index';
 export default function SafariBackground() {
   const { scrollYProgress } = useScroll({ offset: ["start start", "end end"] });
 
-  // ── Spring-smoothed scroll — inertia / drift feel ───────────────────────────
-  const scrollYSmooth = useSpring(scrollYProgress, { damping: 20, stiffness: 65, mass: 0.8 });
+  // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
+  // Mobile spring settles in ~150 ms (near-critically damped); desktop drifts ~1 s.
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const scrollYSmooth = useSpring(scrollYProgress,
+    isMobile
+      ? { damping: 30, stiffness: 400, mass: 0.6 }
+      : { damping: 20, stiffness: 65,  mass: 0.8 }
+  );
 
   // ── Scene stack scrolls through via spring (smooth momentum) ────────────────
   const yStack = useTransform(scrollYSmooth, [0, 1], ["0vh", "-800vh"]);
@@ -74,7 +80,7 @@ export default function SafariBackground() {
 
   return (
     // 2000vh — faster scene traversal (~1.8× vs 3600vh)
-    <div className="relative w-full h-[2000vh] bg-[#2A0F0A]">
+    <div className="relative w-full h-[600vh] md:h-[2000vh] bg-[#2A0F0A]">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
 
         {/* ── LAYER 1 — Scene stack (spring scroll + mouse parallax) ─────────── */}

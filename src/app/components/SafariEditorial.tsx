@@ -50,7 +50,7 @@ const Label = ({ children }: { children: React.ReactNode }) => (
 
 const Title = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Italiana',serif] text-[5.5vw] md:text-[3vw] lg:text-[2.2vw] leading-[1.1] text-white tracking-[0.04em]"
+    className="font-['Italiana',serif] text-[5.5vw] md:text-[22px] lg:text-[2.2vw] leading-[1.1] text-white tracking-[0.04em]"
     style={{ textShadow: '0 1px 24px rgba(0,0,0,0.55)' }}
   >
     {children}
@@ -59,7 +59,7 @@ const Title = ({ children }: { children: React.ReactNode }) => (
 
 const Body = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Cormorant_Garamond',serif] text-[3.6vw] md:text-[1.5vw] lg:text-[0.95vw] leading-[1.72] text-white/80 font-light mt-3"
+    className="font-['Cormorant_Garamond',serif] text-[4vw] md:text-[15px] lg:text-[0.95vw] leading-[1.72] text-white/80 font-light mt-3"
     style={{ textShadow: '0 1px 10px rgba(0,0,0,0.5)' }}
   >
     {children}
@@ -68,7 +68,7 @@ const Body = ({ children }: { children: React.ReactNode }) => (
 
 const Quote = ({ children }: { children: React.ReactNode }) => (
   <p
-    className="font-['Cormorant_Garamond',serif] italic text-[4vw] md:text-[1.9vw] lg:text-[1.3vw] leading-[1.45] text-white/88 font-light mt-3 border-l border-white/28 pl-4"
+    className="font-['Cormorant_Garamond',serif] italic text-[4vw] md:text-[17px] lg:text-[1.3vw] leading-[1.5] text-white/88 font-light mt-3 border-l border-white/28 pl-4 text-left"
     style={{ textShadow: '0 1px 16px rgba(0,0,0,0.5)' }}
   >
     {children}
@@ -82,24 +82,18 @@ const Attr = ({ children }: { children: React.ReactNode }) => (
 );
 
 // ── Text block positioned near the trail ─────────────────────────────────────
-// side: 'left' | 'right' | 'center'
-// top: vertical position in vh
-// maxW: Tailwind max-width class
+// Mobile  (<md): full-width, centred — sidebar columns are unreadable at 375px.
+// Desktop (md+): trail-adjacent; left ends at 38 vw, right starts at 60 vw.
 function Waymark({
   side,
   top,
-  maxW = 'max-w-[22ch]',
   children,
 }: {
   side: 'left' | 'right' | 'center';
-  top: number; // vh
-  maxW?: string;
+  top: number;
   children: React.ReactNode;
 }) {
-  // Left text: ends at ~38vw (leaves gap before trail's left edge ~44vw)
-  // Right text: starts at ~60vw (just past trail's right edge ~56vw)
-  // Center text: centred on 50vw
-  const posStyle: React.CSSProperties =
+  const desktopStyle: React.CSSProperties =
     side === 'left'
       ? { position: 'absolute', right: '62vw', top: `${top}vh`, maxWidth: 'min(30vw, 280px)' }
       : side === 'right'
@@ -114,9 +108,19 @@ function Waymark({
         };
 
   return (
-    <div style={posStyle} className={maxW}>
-      {children}
-    </div>
+    <>
+      {/* Mobile: full-width centred text */}
+      <div
+        className="md:hidden"
+        style={{ position: 'absolute', left: '6vw', right: '6vw', top: `${top}vh`, textAlign: 'center' }}
+      >
+        {children}
+      </div>
+      {/* Desktop: trail-adjacent */}
+      <div className="hidden md:block" style={desktopStyle}>
+        {children}
+      </div>
+    </>
   );
 }
 
