@@ -219,6 +219,8 @@ const SHIMMER = Array.from({ length: 16 }, (_, i) => {
 // ── Main component ────────────────────────────────────────────────────────────
 export default function ZanzibarEditorial() {
   const { scrollYProgress } = useScroll();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const shimmer = isMobile ? SHIMMER.slice(0, 4) : SHIMMER;
 
   const wandererLeft    = useTransform(scrollYProgress, STOPS, X_VW.map(x => `${x}vw`));
   const wandererTop     = useTransform(scrollYProgress, STOPS, Y_VH.map(y => `${y}vh`));
@@ -251,7 +253,7 @@ export default function ZanzibarEditorial() {
       </svg>
 
       {/* ── Water shimmer particles ───────────────────────────────────────────── */}
-      {SHIMMER.map(s => (
+      {shimmer.map(s => (
         <motion.div key={s.id} className="absolute rounded-full"
           style={{
             width: s.size + 'px', height: s.size + 'px',

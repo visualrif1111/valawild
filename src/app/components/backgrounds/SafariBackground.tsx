@@ -1,5 +1,20 @@
 import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
+
+// Precomputed dust particle data — deterministic values prevent Math.random()
+// in render which caused particles to jump position on every re-render
+const DUST_DATA = Array.from({ length: 20 }, (_, i) => ({
+  width:   5  + (i * 2.31) % 15,
+  height:  5  + (i * 2.31) % 15,
+  left:    (i * 5.13) % 100,
+  top:     (i * 7.27) % 100,
+  opacity: 0.05 + (i % 4) * 0.05,
+  blur:    2   + (i % 3),
+  dy:      -(50 + (i * 15.7) % 100),
+  dx:      ((i % 5) - 2) * 12,
+  dur:     15  + (i * 1.73) % 10,
+  delay:   (i * 1.41) % 10,
+}));
 import ValaWildSafari from '../../../imports/ValaWildSafari/index';
 import Visualrif2 from '../../../imports/Visualrif2222221/index';
 import Visualrif3 from '../../../imports/Visualrif333333331/index';
@@ -16,6 +31,7 @@ export default function SafariBackground() {
   // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
   // Mobile spring settles in ~150 ms (near-critically damped); desktop drifts ~1 s.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const dustParticles = isMobile ? DUST_DATA.slice(0, 6) : DUST_DATA;
   const scrollYSmooth = useSpring(scrollYProgress,
     isMobile
       ? { damping: 30, stiffness: 400, mass: 0.6 }
@@ -227,29 +243,20 @@ export default function SafariBackground() {
 
           {/* Dust particles + light beam */}
           <motion.div style={{ x: parallaxX_fg1, y: parallaxY_fg1 }} className="absolute inset-0 mix-blend-screen">
-            {Array.from({ length: 20 }).map((_, i) => (
+            {dustParticles.map((d, i) => (
               <motion.div
                 key={i}
                 className="absolute rounded-full bg-[#FFBF00]"
                 style={{
-                  width:   Math.random() * 15 + 5  + 'px',
-                  height:  Math.random() * 15 + 5  + 'px',
-                  left:    Math.random() * 100 + '%',
-                  top:     Math.random() * 100 + '%',
-                  opacity: Math.random() * 0.2  + 0.05,
-                  filter:  `blur(${Math.random() * 4 + 2}px)`,
+                  width:   d.width  + 'px',
+                  height:  d.height + 'px',
+                  left:    d.left   + '%',
+                  top:     d.top    + '%',
+                  opacity: d.opacity,
+                  filter:  `blur(${d.blur}px)`,
                 }}
-                animate={{
-                  y: [0, -Math.random() * 100 - 50, 0],
-                  x: [0, Math.random() * 50 - 25, 0],
-                  opacity: [0.05, 0.3, 0.05],
-                }}
-                transition={{
-                  duration: Math.random() * 10 + 15,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: Math.random() * 10,
-                }}
+                animate={{ y: [0, d.dy, 0], x: [0, d.dx, 0], opacity: [0.05, 0.3, 0.05] }}
+                transition={{ duration: d.dur, repeat: Infinity, ease: "easeInOut", delay: d.delay }}
               />
             ))}
             <motion.div

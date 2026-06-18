@@ -4,11 +4,29 @@ import zanzibarSrc from '../../../assets/ZANZIBAR.svg';
 
 const BASE_COLOR = '#061424';
 
+// Precomputed sparkle positions — deterministic values avoid Math.random() in
+// render which causes particles to jump position on every re-render and forces
+// Framer Motion to restart animations each time.
+const SPARKLE_DATA = Array.from({ length: 18 }, (_, i) => ({
+  width:   4  + (i * 2.71) % 10,
+  height:  4  + (i * 1.93) % 10,
+  left:    (i * 5.37) % 100,
+  top:     (i * 7.13) % 100,
+  opacity: 0.03 + (i % 5) * 0.033,
+  blur:    1   + i % 3,
+  dy:      -(40 + (i * 12.7) % 80),
+  dx:      ((i % 5) - 2) * 12,
+  dur:     14  + (i * 1.83) % 10,
+  delay:   (i * 2.13) % 12,
+}));
+
 export default function ZanzibarBackground() {
   const { scrollYProgress } = useScroll({ offset: ['start start', 'end end'] });
 
   // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  // On mobile render fewer sparkles to reduce RAF animation count
+  const sparkles = isMobile ? SPARKLE_DATA.slice(0, 6) : SPARKLE_DATA;
   const scrollYSmooth = useSpring(scrollYProgress,
     isMobile
       ? { damping: 30, stiffness: 400, mass: 0.6 }
@@ -65,8 +83,10 @@ export default function ZanzibarBackground() {
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
 
         {/* ── LAYER 1 — Background image (spring scroll, slowest layer) ─────── */}
+        {/* scenePulse scale and float animation skipped on mobile — scaling a
+            large SVG wrapper forces GPU re-rasterisation on every frame */}
         <motion.div
-          style={{ scale: scenePulse }}
+          style={{ scale: isMobile ? 1 : scenePulse }}
           className="absolute inset-0 will-change-transform"
         >
           <motion.div
@@ -74,8 +94,8 @@ export default function ZanzibarBackground() {
             className="absolute top-0 left-0 w-full will-change-transform"
           >
             <motion.div
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
+              animate={isMobile ? undefined : { y: [0, -12, 0] }}
+              transition={isMobile ? undefined : { duration: 30, repeat: Infinity, ease: 'easeInOut' }}
             >
               <img
                 src={zanzibarSrc}
@@ -190,29 +210,20 @@ export default function ZanzibarBackground() {
             style={{ x: parallaxX_fg1, y: parallaxY_fg1 }}
             className="absolute inset-0 mix-blend-screen"
           >
-            {Array.from({ length: 18 }).map((_, i) => (
+            {sparkles.map((s, i) => (
               <motion.div
                 key={i}
                 className="absolute rounded-full bg-[#A8E8DC]"
                 style={{
-                  width:   Math.random() * 10 + 4  + 'px',
-                  height:  Math.random() * 10 + 4  + 'px',
-                  left:    Math.random() * 100 + '%',
-                  top:     Math.random() * 100 + '%',
-                  opacity: Math.random() * 0.16 + 0.03,
-                  filter:  `blur(${Math.random() * 3 + 1}px)`,
+                  width:   s.width  + 'px',
+                  height:  s.height + 'px',
+                  left:    s.left   + '%',
+                  top:     s.top    + '%',
+                  opacity: s.opacity,
+                  filter:  `blur(${s.blur}px)`,
                 }}
-                animate={{
-                  y: [0, -(Math.random() * 80 + 40), 0],
-                  x: [0, Math.random() * 50 - 25, 0],
-                  opacity: [0.03, 0.26, 0.03],
-                }}
-                transition={{
-                  duration: Math.random() * 10 + 14,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  delay: Math.random() * 12,
-                }}
+                animate={{ y: [0, s.dy, 0], x: [0, s.dx, 0], opacity: [0.03, 0.26, 0.03] }}
+                transition={{ duration: s.dur, repeat: Infinity, ease: 'easeInOut', delay: s.delay }}
               />
             ))}
             <motion.div

@@ -178,6 +178,8 @@ const DUST = Array.from({ length: 12 }, (_, i) => ({
 // ── Main component ────────────────────────────────────────────────────────────
 export default function SafariEditorial() {
   const { scrollYProgress } = useScroll();
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const dust = isMobile ? DUST.slice(0, 4) : DUST;
 
   const explorerLeft    = useTransform(scrollYProgress, STOPS, X_VW.map(x => `${x}vw`));
   const explorerTop     = useTransform(scrollYProgress, STOPS, Y_VH.map(y => `${y}vh`));
@@ -207,7 +209,7 @@ export default function SafariEditorial() {
       </svg>
 
       {/* ── Dust ─────────────────────────────────────────────────────────────── */}
-      {DUST.map(d => (
+      {dust.map(d => (
         <motion.div key={d.id} className="absolute rounded-full"
           style={{
             width: d.size + 'px', height: d.size + 'px',
