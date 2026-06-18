@@ -95,7 +95,7 @@ export function Navigation() {
                 VALA WILD
               </Link>
 
-              <div className="hidden md:flex flex-col items-start gap-3 font-['Kufam',sans-serif] text-xs md:text-sm lg:text-base text-white tracking-widest uppercase mt-2">
+              <div className="flex flex-col items-start gap-3 font-['Kufam',sans-serif] text-xs md:text-sm lg:text-base text-white tracking-widest uppercase mt-2">
                 <Link
                   to="/"
                   className={`transition-opacity duration-300 ${location.pathname === '/' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
