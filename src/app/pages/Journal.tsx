@@ -30,7 +30,7 @@ export default function Journal() {
       </section>
 
       <Section width="wide">
-        <Eyebrow className="mb-8">Reading now</Eyebrow>
+        <Eyebrow className="mb-8">Guides & resources</Eyebrow>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
           {live.map((a) => (
             <Link key={a.slug} to={`${ROUTES.journal}/${a.slug}`}
@@ -43,6 +43,7 @@ export default function Journal() {
         </div>
       </Section>
 
+      {soon.length > 0 && (
       <Section width="wide">
         <Eyebrow className="mb-8">Coming shortly</Eyebrow>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
@@ -56,6 +57,7 @@ export default function Journal() {
           ))}
         </ul>
       </Section>
+      )}
 
       <Section width="default">
         <GuideDownload />

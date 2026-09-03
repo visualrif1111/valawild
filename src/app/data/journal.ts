@@ -5,8 +5,8 @@
    That work was built for full-viewport narrative scrolling, which fights a
    commercial page but is exactly right for a guide — so it lives here.
 
-   Remaining entries are planned launch content, marked unpublished until the
-   copy exists. Nothing is invented as a live article.
+   The remaining five are written articles — bodies live in journal-bodies.ts
+   as structured blocks so they map onto Sanity later.
    ───────────────────────────────────────────────────────────────────────── */
 
 export type Article = {
@@ -36,11 +36,11 @@ export const ARTICLES: Article[] = [
     immersive: 'summit',
     published: true,
   },
-  { slug: 'could-i-climb-kilimanjaro', title: 'Could I actually climb Kilimanjaro?',        summary: 'An honest fitness reality check.',                         category: 'Preparation', published: false },
-  { slug: 'training-for-kilimanjaro',  title: 'Training for Kilimanjaro',                   summary: 'The four-month build-up, week by week.',                   category: 'Preparation', published: false },
-  { slug: 'what-to-pack',              title: 'What to pack for Kilimanjaro',               summary: 'What to buy, borrow, and skip.',                           category: 'Preparation', published: false },
-  { slug: 'queer-travel-tanzania',     title: 'Travelling to Tanzania as a queer woman',    summary: 'The law, the reality, and how we plan around both.',       category: 'Safety',      published: false },
-  { slug: 'how-base-camp-works',       title: 'How Base Camp works',                        summary: 'The four months before you fly.',                          category: 'Community',   published: false },
+  { slug: 'could-i-climb-kilimanjaro', title: 'Could I actually climb Kilimanjaro?',        summary: 'An honest fitness reality check.',                         category: 'Preparation', published: true },
+  { slug: 'training-for-kilimanjaro',  title: 'Training for Kilimanjaro',                   summary: 'The four-month build-up, week by week.',                   category: 'Preparation', published: true },
+  { slug: 'what-to-pack',              title: 'What to pack for Kilimanjaro',               summary: 'What to buy, borrow, and skip.',                           category: 'Preparation', published: true },
+  { slug: 'queer-travel-tanzania',     title: 'Travelling to Tanzania as a queer woman',    summary: 'The law, the reality, and how we plan around both.',       category: 'Safety',      published: true },
+  { slug: 'how-base-camp-works',       title: 'How Base Camp works',                        summary: 'The four months before you fly.',                          category: 'Community',   published: true },
 ];
 
 export const findArticle = (slug: string) => ARTICLES.find((a) => a.slug === slug);
