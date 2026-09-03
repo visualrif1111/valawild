@@ -2,8 +2,9 @@ import { Navigate, useParams, Link } from 'react-router';
 import { Navigation } from '../components/Navigation';
 import Footer from '../components/Footer';
 import PageShell from '../components/PageShell';
+import SkipLink from '../components/SkipLink';
 import Section from '../components/editorial/Section';
-import { Eyebrow, Heading, Subheading, Lede, Body, Quote } from '../components/editorial/Type';
+import { Eyebrow, PageTitle, Subheading, Lede, Body, Quote, Label } from '../components/editorial/Type';
 import { ArcRule } from '../components/editorial/Arc';
 import { BODIES, type Block } from '../data/journal-bodies';
 import SafariBackground from '../components/backgrounds/SafariBackground';
@@ -12,7 +13,7 @@ import KilimanjaroBackground from '../components/backgrounds/KilimanjaroBackgrou
 import KilimanjaroEditorial from '../components/KilimanjaroEditorial';
 import CTAStrip from '../components/cta/CTAStrip';
 import { SECONDARY_CTAS } from '../data/ctas';
-import { findArticle } from '../data/journal';
+import { ARTICLES, findArticle } from '../data/journal';
 import { ROUTES } from '../data/site';
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -32,7 +33,11 @@ export default function JournalArticle() {
   if (article.immersive) {
     return (
       <>
+        <SkipLink />
         <Navigation />
+        {/* The scroll editorial carries no heading of its own; SEO-01 and screen
+            readers both need one. */}
+        <h1 id="main" className="sr-only">{article.title}</h1>
         {article.immersive === 'safari' ? (
           <>
             <SafariBackground />
@@ -64,11 +69,14 @@ export default function JournalArticle() {
           the tall top-of-page nav. */}
       <Section width="narrow" className="!pt-36 md:!pt-60">
         <Eyebrow className="mb-6">{article.category}</Eyebrow>
-        <Heading>{article.title}</Heading>
+        <PageTitle>{article.title}</PageTitle>
 
         <article className="flex flex-col mt-12">
           {blocks.map((b, i) => <BlockView key={i} block={b} />)}
         </article>
+
+        {/* SEO-04: internal linking between resources */}
+        <ReadNext currentSlug={article.slug} />
 
         <div className="mt-16 pt-10 border-t border-cream/12">
           <Link to={ROUTES.journal}
@@ -112,4 +120,25 @@ function BlockView({ block }: { block: Block }) {
         </ul>
       );
   }
+}
+
+/** Two further reads, so articles link to each other rather than dead-ending. */
+function ReadNext({ currentSlug }: { currentSlug: string }) {
+  const others = ARTICLES.filter((a) => a.published && a.slug !== currentSlug).slice(0, 2);
+  if (others.length === 0) return null;
+  return (
+    <aside className="mt-20 pt-10 border-t border-cream/12">
+      <Eyebrow className="mb-7">Read next</Eyebrow>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {others.map((a) => (
+          <Link key={a.slug} to={`${ROUTES.journal}/${a.slug}`} className="group block">
+            <Label className="text-ember/70">{a.category}</Label>
+            <Subheading className="mt-2 text-[5.5vw] md:text-[21px] group-hover:text-ember transition-colors duration-300">
+              {a.title}
+            </Subheading>
+          </Link>
+        ))}
+      </div>
+    </aside>
+  );
 }

@@ -22,6 +22,13 @@ export const Display = ({ children, className = '' }: P) => (
   </h1>
 );
 
+/** Article/page title rendered as h1. SEO-01: every core page needs one H1. */
+export const PageTitle = ({ children, className = '' }: P) => (
+  <h1 className={`font-['Italiana',serif] text-[8vw] md:text-[40px] leading-[1.12] tracking-[0.03em] text-cream ${className}`}>
+    {children}
+  </h1>
+);
+
 export const Heading = ({ children, className = '' }: P) => (
   <h2 className={`font-['Italiana',serif] text-[8vw] md:text-[40px] leading-[1.12] tracking-[0.03em] text-cream ${className}`}>
     {children}
