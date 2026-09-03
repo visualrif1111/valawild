@@ -67,3 +67,17 @@
   /* Golden ratio — for sacred-geometry composition */
   --phi: 1.618;
 }
+
+/* ── Chrome heights ─────────────────────────────────────────────────────────
+   The scrolled navigation bar's height, published so page-level sticky
+   sub-navs (e.g. the Kilimanjaro anchor bar) can offset beneath it instead of
+   colliding with it, and so anchor targets clear both bars.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --vw-nav-h: 64px;
+  --vw-subnav-h: 52px;
+}
+
+@media (min-width: 768px) {
+  :root { --vw-nav-h: 76px; }
+}

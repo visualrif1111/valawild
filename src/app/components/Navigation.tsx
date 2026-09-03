@@ -150,45 +150,60 @@ export function Navigation() {
             /* ── SCROLLED ─────────────────────────────────────────────── */
             <motion.nav
               key="nav-scrolled"
-              initial={{ opacity: 0, y: -40 }}
+              initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -40 }}
+              exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="absolute top-0 left-0 w-full pt-8 pb-4 px-8 md:px-16 pointer-events-auto flex items-start justify-between"
+              /* Compact horizontal bar. The tall vertical column this replaced
+                 was built for three links floating over full-bleed imagery; it
+                 collided with page-level sticky sub-navs once the IA grew. */
+              className="absolute top-0 left-0 w-full pointer-events-auto bg-ink/88 backdrop-blur-md border-b border-cream/10"
+              style={{ height: 'var(--vw-nav-h)' }}
             >
-              {/* MOBILE */}
-              <div className="flex md:hidden w-full items-center justify-between">
+              <div className="h-full max-w-7xl mx-auto px-8 md:px-16 flex items-center justify-between gap-6">
+
                 <Link to={ROUTES.home} onPointerDown={tap(ROUTES.home)} style={{ touchAction: 'manipulation' }}
-                  className="font-['Italiana',sans-serif] text-2xl text-white tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300 py-2">
+                  className="font-['Italiana',sans-serif] text-xl md:text-2xl text-white tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300 shrink-0">
                   VALA WILD
                 </Link>
+
+                {/* DESKTOP links */}
+                <div className="hidden md:flex items-center gap-6 lg:gap-9 font-['Kufam',sans-serif] text-[11px] lg:text-[12px] text-white tracking-[0.14em] uppercase">
+                  {TOP_NAV.map((item) => (
+                    <div key={item.to} className="relative group">
+                      <Link to={item.to} className={`py-2 block whitespace-nowrap ${linkBase} ${active(item.to)}`}>
+                        {item.label}
+                      </Link>
+                      {item.children && (
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible
+                                        group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                          <div className="flex flex-col gap-3 bg-ink/95 backdrop-blur-md border border-cream/10 rounded-2xl px-6 py-5 whitespace-nowrap">
+                            {item.children.map((child) => (
+                              <Link key={child.to} to={child.to}
+                                className={`text-[11px] tracking-[0.2em] ${linkBase} ${active(child.to)}`}>
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="hidden md:flex items-center gap-6 shrink-0">
+                  <Social className="hidden lg:flex" />
+                  <NavCTA compact />
+                </div>
+
+                {/* MOBILE hamburger */}
                 <button onPointerDown={openMenu} onClick={() => setMenuOpen(true)}
                   style={{ touchAction: 'manipulation' }} aria-label="Open menu"
-                  className="w-10 h-10 flex flex-col items-center justify-center gap-[5px] text-white">
+                  className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] text-white -mr-2">
                   <span className="block w-5 h-[1.5px] bg-white rounded-full" />
                   <span className="block w-5 h-[1.5px] bg-white rounded-full" />
                   <span className="block w-5 h-[1.5px] bg-white rounded-full" />
                 </button>
-              </div>
-
-              {/* DESKTOP */}
-              <div className="hidden md:flex flex-col items-start gap-4">
-                <Link to={ROUTES.home}
-                  className="font-['Italiana',sans-serif] text-3xl lg:text-[42px] text-white tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300">
-                  VALA WILD
-                </Link>
-                <div className="flex flex-col items-start font-['Kufam',sans-serif] text-[13px] text-white tracking-widest uppercase mt-1">
-                  {TOP_NAV.map((item) => (
-                    <Link key={item.to} to={item.to} className={`py-2.5 pr-8 ${linkBase} ${active(item.to)}`}>
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              <div className="hidden md:flex items-center gap-7 mt-2">
-                <Social />
-                <NavCTA compact />
               </div>
             </motion.nav>
           )}

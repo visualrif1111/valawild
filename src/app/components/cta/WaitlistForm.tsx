@@ -30,7 +30,7 @@ export default function WaitlistForm() {
   }
 
   return (
-    <div id="waitlist" className="w-full max-w-xl scroll-mt-32">
+    <div id="waitlist" className="w-full max-w-xl" style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }}>
       <p className="font-['Cormorant_Garamond',serif] font-light text-[18px] leading-[1.6] text-cream/75">
         {WAITLIST.prompt}
       </p>

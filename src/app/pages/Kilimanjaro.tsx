@@ -75,7 +75,10 @@ export default function Kilimanjaro() {
       </section>
 
       {/* ── Anchor nav — long page, must stay skimmable ─────────────────── */}
-      <nav className="sticky top-0 z-40 w-full bg-ink/90 backdrop-blur-md border-y border-cream/10">
+      <nav
+        className="sticky z-30 w-full bg-ink/92 backdrop-blur-md border-b border-cream/10"
+        style={{ top: 'var(--vw-nav-h)' }}
+      >
         <div className="max-w-6xl mx-auto px-6 md:px-16 flex gap-x-8 gap-y-2 overflow-x-auto py-4 justify-start md:justify-center">
           {ANCHORS.map((a) => (
             <a key={a.to} href={a.to}

@@ -20,7 +20,7 @@ export default function GuideDownload({ className = '' }: { className?: string }
   }
 
   return (
-    <div id="guide" className={`w-full max-w-xl scroll-mt-32 ${className}`}>
+    <div id="guide" className={`w-full max-w-xl ${className}`} style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }}>
       <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.34em] uppercase text-ember/70 mb-4">
         The Kilimanjaro Guide
       </p>

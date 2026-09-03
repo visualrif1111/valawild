@@ -57,7 +57,7 @@ export default function EnquiryForm({
 
   if (state === 'success') {
     return (
-      <div id={id} className="w-full max-w-xl scroll-mt-32">
+      <div id={id} className="w-full max-w-xl" style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }}>
         <p role="status" className="font-['Italiana',serif] text-[28px] text-cream leading-tight">
           Thank you — that’s with us.
         </p>
@@ -69,7 +69,7 @@ export default function EnquiryForm({
   }
 
   return (
-    <form id={id} onSubmit={onSubmit} className="w-full max-w-xl scroll-mt-32 flex flex-col gap-7" noValidate>
+    <form id={id} onSubmit={onSubmit} className="w-full max-w-xl flex flex-col gap-7" style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }} noValidate>
       {prompt && (
         <p className="font-['Cormorant_Garamond',serif] font-light italic text-[17px] leading-[1.7] text-cream/55">
           {prompt}
