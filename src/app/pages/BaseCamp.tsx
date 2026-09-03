@@ -1,7 +1,8 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
+import { BandRule } from '../components/editorial/Poster';
 import { Eyebrow, Display, Heading, Subheading, Body, Lede, Quote } from '../components/editorial/Type';
-import { Horizon, ArcRule } from '../components/editorial/Arc';
+import { Horizon } from '../components/editorial/Arc';
 import CTAStrip from '../components/cta/CTAStrip';
 import { SECONDARY_CTAS } from '../data/ctas';
 
@@ -48,7 +49,7 @@ export default function BaseCamp() {
         </Quote>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       <Section width="default">
         <Eyebrow className="mb-8">The four months</Eyebrow>

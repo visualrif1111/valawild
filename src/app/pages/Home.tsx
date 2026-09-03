@@ -1,8 +1,9 @@
 import { Link } from 'react-router';
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
-import { Eyebrow, Display, Heading, Subheading, Lede, Body, Quote, Label } from '../components/editorial/Type';
-import { Horizon, ArcRule } from '../components/editorial/Arc';
+import { Eyebrow, Heading, Subheading, Lede, Body, Quote, Label,
+         PosterEyebrow, PosterTitle, PosterLede } from '../components/editorial/Type';
+import { PosterBlock, BandRule } from '../components/editorial/Poster';
 import CTAButton from '../components/cta/CTAButton';
 import CTAStrip from '../components/cta/CTAStrip';
 import GuideDownload from '../components/cta/GuideDownload';
@@ -14,33 +15,34 @@ import { CONFIRMED_DEPARTURE, OBJECTIONS } from '../data/kilimanjaro';
 
 export default function Home() {
   return (
-    <PageShell>
+    <PageShell navTone="dark">
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 md:px-16 text-center overflow-hidden">
-        <Horizon className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140vw] md:w-[900px] opacity-70" />
+      <PosterBlock className="min-h-screen flex items-center justify-center">
+        {/* Bottom padding clears the whole horizon assembly (bands + gold ridge +
+            mirrored world), so no display type ever crosses a colour break. */}
+        <div className="px-8 md:px-16 text-center max-w-4xl mx-auto pt-52 md:pt-60
+                        pb-[calc(38vh+140px)] md:pb-[calc(42vh+150px)] flex flex-col items-center">
+          <PosterEyebrow className="mb-8">Lesbian-led · Queer-inclusive · Tanzania</PosterEyebrow>
 
-        <div className="relative z-10 max-w-4xl flex flex-col items-center pt-24">
-          <Eyebrow className="mb-7">Lesbian-led · Queer-inclusive · Tanzania</Eyebrow>
-
-          <Display>
+          <PosterTitle>
             You don’t need<br />someone to go with.
-          </Display>
+          </PosterTitle>
 
-          <Lede className="mt-8 max-w-2xl">
+          <PosterLede className="mt-9 max-w-2xl">
             All-inclusive hosted adventures for women who are done waiting for the right
             person to be free. Come on your own. You won’t stay on your own.
-          </Lede>
+          </PosterLede>
 
-          <div className="mt-11 flex flex-col items-center gap-6">
-            <CTAButton cta={PRIMARY_CTA} variant="primary" />
+          <div className="mt-12 flex flex-col items-center gap-6">
+            <CTAButton cta={PRIMARY_CTA} variant="poster" />
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              <CTAButton cta={SECONDARY_CTAS.contact} variant="quiet" />
-              <CTAButton cta={SECONDARY_CTAS.guide} variant="quiet" />
+              <CTAButton cta={SECONDARY_CTAS.contact} variant="posterQuiet" />
+              <CTAButton cta={SECONDARY_CTAS.guide} variant="posterQuiet" />
             </div>
           </div>
         </div>
-      </section>
+      </PosterBlock>
 
       {/* ── Problem / solution ─────────────────────────────────────────── */}
       <Section width="narrow">
@@ -64,7 +66,7 @@ export default function Home() {
         </Quote>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       {/* ── Featured departure ─────────────────────────────────────────── */}
       <Section width="default">
@@ -126,7 +128,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       {/* ── Guide + Live Q&A ───────────────────────────────────────────── */}
       <Section width="default">

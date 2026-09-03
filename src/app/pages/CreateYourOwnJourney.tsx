@@ -1,7 +1,7 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
-import { Eyebrow, Display, Heading, Subheading, Lede, Body, Quote } from '../components/editorial/Type';
-import { Horizon, ArcRule } from '../components/editorial/Arc';
+import { Eyebrow, Heading, Subheading, Lede, Body, Quote, PosterEyebrow, PosterTitle, PosterLede } from '../components/editorial/Type';
+import { PosterBlock, BandRule } from '../components/editorial/Poster';
 import CTAButton from '../components/cta/CTAButton';
 import CTAStrip from '../components/cta/CTAStrip';
 import EnquiryForm from '../components/cta/EnquiryForm';
@@ -38,24 +38,23 @@ const SUPPORT = [
 
 export default function CreateYourOwnJourney() {
   return (
-    <PageShell>
+    <PageShell navTone="dark">
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex flex-col items-center justify-center px-8 md:px-16 text-center overflow-hidden">
-        <Horizon className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140vw] md:w-[900px] opacity-60" />
-        <div className="relative z-10 max-w-4xl flex flex-col items-center pt-24">
-          <Eyebrow className="mb-7">Private Tanzania journeys</Eyebrow>
-          <Display>Travel with<br />your own people.</Display>
-          <Lede className="mt-8 max-w-2xl">
+      <PosterBlock className="min-h-screen flex items-center justify-center">
+        <div className="px-8 md:px-16 text-center max-w-4xl mx-auto pt-52 md:pt-60 pb-[calc(38vh+140px)] md:pb-[calc(42vh+150px)] flex flex-col items-center">
+          <PosterEyebrow className="mb-8">Private Tanzania journeys</PosterEyebrow>
+          <PosterTitle>Travel with<br />your own people.</PosterTitle>
+          <PosterLede className="mt-9 max-w-2xl">
             You already have the people. What you want is someone to plan it who
             understands who is travelling, and does not need it explained twice.
-          </Lede>
-          <div className="mt-11 flex flex-col items-center gap-6">
-            <CTAButton cta={SECONDARY_CTAS.ownJourney} variant="primary" label="Start Your Own Journey" />
-            <CTAButton cta={PRIMARY_CTA} variant="quiet" />
+          </PosterLede>
+          <div className="mt-12 flex flex-col items-center gap-6">
+            <CTAButton cta={SECONDARY_CTAS.ownJourney} variant="poster" label="Start Your Own Journey" />
+            <CTAButton cta={PRIMARY_CTA} variant="posterQuiet" />
           </div>
         </div>
-      </section>
+      </PosterBlock>
 
       {/* ── Framing ────────────────────────────────────────────────────── */}
       <Section width="narrow">
@@ -75,7 +74,7 @@ export default function CreateYourOwnJourney() {
         </Quote>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       {/* ── Who this is for ────────────────────────────────────────────── */}
       <Section width="wide">
@@ -125,7 +124,7 @@ export default function CreateYourOwnJourney() {
         </Body>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       {/* ── Enquiry ────────────────────────────────────────────────────── */}
       <Section width="default" id="enquiry">

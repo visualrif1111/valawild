@@ -4,8 +4,8 @@ import Footer from '../components/Footer';
 import PageShell from '../components/PageShell';
 import SkipLink from '../components/SkipLink';
 import Section from '../components/editorial/Section';
+import { BandRule } from '../components/editorial/Poster';
 import { Eyebrow, PageTitle, Subheading, Lede, Body, Quote, Label } from '../components/editorial/Type';
-import { ArcRule } from '../components/editorial/Arc';
 import { BODIES, type Block } from '../data/journal-bodies';
 import SafariBackground from '../components/backgrounds/SafariBackground';
 import SafariEditorial from '../components/SafariEditorial';
@@ -86,7 +86,7 @@ export default function JournalArticle() {
         </div>
       </Section>
 
-      <ArcRule className="mt-8" />
+      <BandRule className="mt-8" />
       <CTAStrip
         heading="Questions this didn’t answer?"
         secondary={[SECONDARY_CTAS.guide, SECONDARY_CTAS.liveQA, SECONDARY_CTAS.contact]}

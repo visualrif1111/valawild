@@ -1,7 +1,8 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
+import { BandRule } from '../components/editorial/Poster';
 import { Eyebrow, Display, Heading, Body, Lede, Quote } from '../components/editorial/Type';
-import { Horizon, ArcRule } from '../components/editorial/Arc';
+import { Horizon } from '../components/editorial/Arc';
 import CTAStrip from '../components/cta/CTAStrip';
 import { SECONDARY_CTAS } from '../data/ctas';
 import { BRAND } from '../data/site';
@@ -40,7 +41,7 @@ export default function About() {
         <Quote className="mt-10">{BRAND.creativeLine}</Quote>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       <Section width="narrow">
         <Eyebrow className="mb-6">Why it’s built this way</Eyebrow>

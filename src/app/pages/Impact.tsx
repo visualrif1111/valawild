@@ -1,7 +1,8 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
+import { BandRule } from '../components/editorial/Poster';
 import { Eyebrow, Display, Heading, Subheading, Body, Lede } from '../components/editorial/Type';
-import { Horizon, ArcRule } from '../components/editorial/Arc';
+import { Horizon } from '../components/editorial/Arc';
 import CTAButton from '../components/cta/CTAButton';
 import CTAStrip from '../components/cta/CTAStrip';
 import { SECONDARY_CTAS } from '../data/ctas';
@@ -46,7 +47,7 @@ export default function Impact() {
         </div>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       <Section width="narrow">
         <Eyebrow className="mb-6">What “Local by Design” means</Eyebrow>

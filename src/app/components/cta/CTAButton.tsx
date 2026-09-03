@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import type { CTA } from '../../data/ctas';
 
-type Variant = 'primary' | 'secondary' | 'quiet';
+type Variant = 'primary' | 'secondary' | 'quiet' | 'poster' | 'posterQuiet';
 
 const BASE =
   "inline-flex items-center justify-center font-['Kufam',sans-serif] uppercase " +
@@ -18,6 +18,14 @@ const VARIANTS: Record<Variant, string> = {
   quiet:
     'text-smoke/85 px-0 py-2 border-b border-ink/20 rounded-none ' +
     'hover:text-ink hover:border-ink/60',
+  /* On the crimson poster ground. Gold fill reads as the sun and clears
+     contrast against both the sky and the bands. */
+  poster:
+    'bg-gold text-navy px-10 py-4 hover:bg-cream ' +
+    'shadow-[0_12px_44px_-14px_rgba(14,23,41,0.75)]',
+  posterQuiet:
+    'text-cream/85 px-0 py-2 border-b border-cream/40 rounded-none ' +
+    'hover:text-cream hover:border-gold',
 };
 
 export default function CTAButton({

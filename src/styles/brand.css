@@ -30,6 +30,19 @@
   --color-clay:     #A94E27;
   --color-brass:    #C9A34E;
 
+  /* ── Poster palette ───────────────────────────────────────────────────── */
+  /* Sunset band ramp — the stacked-stripe motif, read top to bottom.
+     70s/80s travel-poster heat, kept warm rather than neon.              */
+  --color-crimson:  #A81E28;
+  --color-rust:     #C43C22;
+  --color-tangerine:#E4682A;
+  --color-amber:    #F0952B;
+  --color-gold:     #F5BE2C;
+
+  /* The world below the horizon. Deep, not cold — navy with warmth in it. */
+  --color-navy:     #16233D;
+  --color-midnight: #0E1729;
+
   /* ── Earth — grounding greens. ────────────────────────────────────────── */
   --color-moss:     #4E5F49;
   --color-fern:     #6E8163;
@@ -40,7 +53,8 @@
   --color-smoke:    #574A3F;
 
   /* ── Typography ───────────────────────────────────────────────────────── */
-  --font-display:   'Italiana', serif;      /* headlines, brand voice        */
+  --font-display:   'Italiana', serif;      /* editorial headings            */
+  --font-poster:    'Abril Fatface', 'Italiana', serif; /* poster-scale display */
   --font-body:      'Cormorant Garamond', serif; /* editorial reading copy   */
   --font-label:     'Kufam', sans-serif;    /* eyebrows, labels, CTAs        */
 

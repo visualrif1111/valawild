@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
-import { Eyebrow, Display, Heading, Subheading, Lede, Body, Quote, Label } from '../components/editorial/Type';
-import { Horizon, ArcRule } from '../components/editorial/Arc';
+import { Eyebrow, Heading, Subheading, Lede, Body, Quote, Label, PosterEyebrow, PosterTitle, PosterLede } from '../components/editorial/Type';
+import { PosterBlock, BandRule } from '../components/editorial/Poster';
 import CTAButton from '../components/cta/CTAButton';
 import CTAStrip from '../components/cta/CTAStrip';
 import GuideDownload from '../components/cta/GuideDownload';
@@ -51,28 +51,27 @@ const NOT_INCLUDED = [
 
 export default function Kilimanjaro() {
   return (
-    <PageShell>
+    <PageShell navTone="dark">
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[92vh] flex flex-col items-center justify-center px-8 md:px-16 text-center overflow-hidden">
-        <Horizon className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140vw] md:w-[900px] opacity-65" />
-        <div className="relative z-10 max-w-4xl flex flex-col items-center pt-24">
-          <Eyebrow className="mb-7">Tanzania · The flagship journey</Eyebrow>
-          <Display>Mount<br />Kilimanjaro</Display>
-          <Lede className="mt-8 max-w-2xl">
+      <PosterBlock className="min-h-screen flex items-center justify-center">
+        <div className="px-8 md:px-16 text-center max-w-4xl mx-auto pt-52 md:pt-60 pb-[calc(38vh+140px)] md:pb-[calc(42vh+150px)] flex flex-col items-center">
+          <PosterEyebrow className="mb-8">Tanzania · The flagship journey</PosterEyebrow>
+          <PosterTitle>Mount<br />Kilimanjaro</PosterTitle>
+          <PosterLede className="mt-9 max-w-2xl">
             All-inclusive, fully hosted, and built for people arriving on their own.
             Nineteen thousand feet, walked slowly, with a group that knows your name
             before you land.
-          </Lede>
-          <div className="mt-11 flex flex-col items-center gap-6">
-            <CTAButton cta={PRIMARY_CTA} variant="primary" />
+          </PosterLede>
+          <div className="mt-12 flex flex-col items-center gap-6">
+            <CTAButton cta={PRIMARY_CTA} variant="poster" />
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              <CTAButton cta={SECONDARY_CTAS.guide} variant="quiet" />
-              <CTAButton cta={SECONDARY_CTAS.liveQA} variant="quiet" />
+              <CTAButton cta={SECONDARY_CTAS.guide} variant="posterQuiet" />
+              <CTAButton cta={SECONDARY_CTAS.liveQA} variant="posterQuiet" />
             </div>
           </div>
         </div>
-      </section>
+      </PosterBlock>
 
       {/* ── Anchor nav — long page, must stay skimmable ─────────────────── */}
       <nav
@@ -119,7 +118,7 @@ export default function Kilimanjaro() {
         </Quote>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       {/* ── 6.2A Departures & waitlist ─────────────────────────────────── */}
       <Section width="default" id="departures">
@@ -211,7 +210,7 @@ export default function Kilimanjaro() {
         </Body>
       </Section>
 
-      <ArcRule />
+      <BandRule />
 
       {/* ── FAQ ────────────────────────────────────────────────────────── */}
       <Section width="default" id="faq">
