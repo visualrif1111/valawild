@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
 /* Rasterised from MOUBNT.svg (5.8 MB -> 612 KB). The source was a painterly
    illustration exported as vector, which SVG stores badly; aspect is preserved
    (1600x7980 ~= the original 740.44x3692.27 viewBox). */
@@ -25,12 +25,16 @@ export default function KilimanjaroBackground() {
 
   // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const snowParticles = isMobile ? SNOW_DATA.slice(0, 6) : SNOW_DATA;
-  const scrollYSmooth = useSpring(scrollYProgress,
+  // Decorative motion only — scroll-driven scene visibility must keep working,
+  // or the story beats would all render on top of each other.
+  const reduce = useReducedMotion();
+  const snowParticles = reduce ? [] : isMobile ? SNOW_DATA.slice(0, 6) : SNOW_DATA;
+  const scrollYSpring = useSpring(scrollYProgress,
     isMobile
       ? { damping: 30, stiffness: 400, mass: 0.6 }
       : { damping: 20, stiffness: 65,  mass: 0.8 }
   );
+  const scrollYSmooth = reduce ? scrollYProgress : scrollYSpring;
 
   // ── Background image (spring-driven, 88% SVG traversal) ─────────────────────
   // SVG viewBox 740×3692 → at 100vw, height ≈ 499vw. -440vw = 88%.
@@ -56,9 +60,10 @@ export default function KilimanjaroBackground() {
       mouseX.set(e.clientX / window.innerWidth);
       mouseY.set(e.clientY / window.innerHeight);
     };
+    if (reduce) return;
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, reduce]);
   const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 400 });
   const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 400 });
   const parallaxX_bg  = useTransform(smoothMouseX, [0, 1], ['-1%',  '1%']);
@@ -88,8 +93,8 @@ export default function KilimanjaroBackground() {
             className="absolute top-0 left-0 w-full will-change-transform"
           >
             <motion.div
-              animate={isMobile ? undefined : { y: [0, -14, 0] }}
-              transition={isMobile ? undefined : { duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+              animate={isMobile || reduce ? undefined : { y: [0, -14, 0] }}
+              transition={isMobile || reduce ? undefined : { duration: 28, repeat: Infinity, ease: 'easeInOut' }}
             >
               <img
                 src={moubntSrc}

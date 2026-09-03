@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
 
 // Precomputed dust particle data — deterministic values prevent Math.random()
 // in render which caused particles to jump position on every re-render
@@ -59,12 +59,16 @@ export default function SafariBackground() {
   // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
   // Mobile spring settles in ~150 ms (near-critically damped); desktop drifts ~1 s.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const dustParticles = isMobile ? DUST_DATA.slice(0, 6) : DUST_DATA;
-  const scrollYSmooth = useSpring(scrollYProgress,
+  // Decorative motion only — scroll-driven scene visibility must keep working,
+  // or the story beats would all render on top of each other.
+  const reduce = useReducedMotion();
+  const dustParticles = reduce ? [] : isMobile ? DUST_DATA.slice(0, 6) : DUST_DATA;
+  const scrollYSpring = useSpring(scrollYProgress,
     isMobile
       ? { damping: 30, stiffness: 400, mass: 0.6 }
       : { damping: 20, stiffness: 65,  mass: 0.8 }
   );
+  const scrollYSmooth = reduce ? scrollYProgress : scrollYSpring;
 
   // ── Scene stack scrolls through via spring (smooth momentum) ────────────────
   const yStack = useTransform(scrollYSmooth, [0, 1], ["0vh", "-800vh"]);
@@ -103,9 +107,10 @@ export default function SafariBackground() {
       mouseX.set(e.clientX / window.innerWidth);
       mouseY.set(e.clientY / window.innerHeight);
     };
+    if (reduce) return;
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, reduce]);
   const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 400 });
   const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 400 });
   const parallaxX_bg  = useTransform(smoothMouseX, [0, 1], ["-1%",  "1%"]);

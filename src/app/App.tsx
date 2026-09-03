@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import Home from './pages/Home';
 import Kilimanjaro from './pages/Kilimanjaro';
@@ -15,6 +15,7 @@ import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 import NotFound from './pages/NotFound';
 import { ROUTES } from './data/site';
+import { useDocumentMeta } from './useDocumentMeta';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Routing — Sitemap V2.
@@ -34,7 +35,11 @@ function ScrollManager() {
       const id = hash.slice(1);
       requestAnimationFrame(() => {
         const el = document.getElementById(id);
-        if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+        if (el) {
+          const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+          return;
+        }
         window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
       });
       return;
@@ -45,9 +50,13 @@ function ScrollManager() {
   return null;
 }
 
-/* Cinematic fade-from-black between routes */
+/* Cinematic fade-from-black between routes. Skipped entirely for anyone who
+   has asked for reduced motion — a full-screen flash is exactly the kind of
+   thing that setting exists to prevent. */
 function PageTransitionOverlay() {
   const { pathname } = useLocation();
+  const reduce = useReducedMotion();
+  if (reduce) return null;
   return (
     <AnimatePresence>
       <motion.div
@@ -64,6 +73,7 @@ function PageTransitionOverlay() {
 
 export default function App() {
   const location = useLocation();
+  useDocumentMeta();
   return (
     <>
       <ScrollManager />
