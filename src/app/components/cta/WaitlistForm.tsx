@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { WAITLIST } from '../../data/kilimanjaro';
 import { INTEGRATIONS } from '../../data/integrations';
 import { useLeadForm, isValidEmail } from './useLeadForm';
+import { FORMS_LIVE } from '../../data/integrations';
+import FormsOffline from './FormsOffline';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    FS 6.2A — secondary waitlist.
@@ -38,7 +40,9 @@ export default function WaitlistForm() {
         {WAITLIST.support}
       </p>
 
-      {settled ? (
+      {!FORMS_LIVE ? (
+        <FormsOffline subject="Kilimanjaro waitlist" action="and we’ll add you to the waitlist" />
+      ) : settled ? (
         <p
           role="status"
           className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-ember mt-7 leading-relaxed"

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useLeadForm, isValidEmail } from './useLeadForm';
+import { FORMS_LIVE } from '../../data/integrations';
+import FormsOffline from './FormsOffline';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared enquiry form — Contact (FS 6.7), Create Your Own Journey (FS 6.3) and
@@ -53,6 +55,19 @@ export default function EnquiryForm({
       travellingAs: group || undefined,
       trip: tripReference,
     });
+  }
+
+  if (!FORMS_LIVE) {
+    return (
+      <div id={id} className="w-full max-w-xl scroll-mt-32">
+        {prompt && (
+          <p className="font-['Cormorant_Garamond',serif] font-light italic text-[17px] leading-[1.7] text-cream/55">
+            {prompt}
+          </p>
+        )}
+        <FormsOffline subject={tripReference ?? 'Enquiry'} />
+      </div>
+    );
   }
 
   if (state === 'success') {

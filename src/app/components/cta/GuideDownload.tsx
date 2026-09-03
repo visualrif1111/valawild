@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { INTEGRATIONS } from '../../data/integrations';
+import { INTEGRATIONS, FORMS_LIVE } from '../../data/integrations';
+import FormsOffline from './FormsOffline';
 import { useLeadForm, isValidEmail } from './useLeadForm';
 
 /* FS 6.6 / 6.2 — lower-friction lead magnet. Email only; nothing else earns a
@@ -32,7 +33,9 @@ export default function GuideDownload({ className = '' }: { className?: string }
         travelling to Tanzania as a queer woman. No pressure to book anything.
       </p>
 
-      {state === 'success' ? (
+      {!FORMS_LIVE ? (
+        <FormsOffline subject="Kilimanjaro guide" action="and we’ll send you the guide" />
+      ) : state === 'success' ? (
         <p role="status" className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-ember mt-7">
           On its way — check your inbox.
         </p>
