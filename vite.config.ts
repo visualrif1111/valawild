@@ -10,8 +10,8 @@ import fs from 'fs'
    they cannot drift out of sync with the app. Journal articles are pulled from
    the article index and only published ones are listed.
 
-   Domain comes from VITE_SITE_URL, falling back to the value in
-   src/app/data/site.ts.
+   Domain is valawild.com (confirmed). Override with VITE_SITE_URL if a
+   build ever needs to point somewhere else.
    ───────────────────────────────────────────────────────────────────────── */
 function seoFiles() {
   return {
