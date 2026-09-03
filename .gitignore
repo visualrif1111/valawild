@@ -1,3 +1,9 @@
 node_modules
 .vercel
 pnpm-lock.yaml
+
+# Build output — Vercel builds from source, so this never needs committing
+dist
+
+# Local editor / assistant settings
+.claude/settings.local.json
