@@ -11,13 +11,13 @@ const BASE =
 /* Curves, not corners — the pill is the retro-futurist tell. */
 const VARIANTS: Record<Variant, string> = {
   primary:
-    'bg-ember text-ink px-9 py-4 hover:bg-flare hover:tracking-[0.2em] ' +
+    'bg-clay text-paper px-9 py-4 hover:bg-ember hover:tracking-[0.2em] ' +
     'shadow-[0_0_0_0_rgba(212,105,58,0.5)] hover:shadow-[0_8px_38px_-8px_rgba(212,105,58,0.65)]',
   secondary:
-    'border border-cream/30 text-cream px-8 py-3.5 hover:border-cream/70 hover:bg-cream/[0.04]',
+    'border border-moss/45 text-moss px-8 py-3.5 hover:bg-moss hover:text-paper hover:border-moss',
   quiet:
-    'text-cream/55 px-0 py-2 border-b border-cream/20 rounded-none ' +
-    'hover:text-cream hover:border-cream/60',
+    'text-smoke/85 px-0 py-2 border-b border-ink/20 rounded-none ' +
+    'hover:text-ink hover:border-ink/60',
 };
 
 export default function CTAButton({

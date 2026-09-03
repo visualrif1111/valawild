@@ -66,7 +66,7 @@ export default function FAQ() {
           <Eyebrow className="mb-8">{g.heading}</Eyebrow>
           <div className="flex flex-col gap-9">
             {g.items.map((item) => (
-              <div key={item.q} className="border-t border-cream/12 pt-6">
+              <div key={item.q} className="border-t border-ink/12 pt-6">
                 <Subheading className="text-[5.5vw] md:text-[22px]">{item.q}</Subheading>
                 <Body className="mt-3 max-w-2xl">{item.a}</Body>
               </div>

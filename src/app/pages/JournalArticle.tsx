@@ -34,7 +34,7 @@ export default function JournalArticle() {
     return (
       <>
         <SkipLink />
-        <Navigation />
+        <Navigation tone="dark" />
         {/* The scroll editorial carries no heading of its own; SEO-01 and screen
             readers both need one. */}
         <h1 id="main" className="sr-only">{article.title}</h1>
@@ -50,7 +50,7 @@ export default function JournalArticle() {
           </>
         )}
         <CTAStrip
-          className="bg-ink"
+          className="bg-paper"
           heading="Thinking about it seriously?"
           secondary={[SECONDARY_CTAS.guide, SECONDARY_CTAS.liveQA]}
         />
@@ -78,9 +78,9 @@ export default function JournalArticle() {
         {/* SEO-04: internal linking between resources */}
         <ReadNext currentSlug={article.slug} />
 
-        <div className="mt-16 pt-10 border-t border-cream/12">
+        <div className="mt-16 pt-10 border-t border-ink/12">
           <Link to={ROUTES.journal}
-            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
             Back to the Journal
           </Link>
         </div>
@@ -111,8 +111,8 @@ function BlockView({ block }: { block: Block }) {
         <ul className="mt-6 flex flex-col gap-4">
           {block.items.map((item) => (
             <li key={item} className="flex gap-4 items-start">
-              <span aria-hidden className="mt-[0.85em] w-3 h-px bg-ember/60 shrink-0" />
-              <span className="font-['Cormorant_Garamond',serif] font-light text-[4.6vw] md:text-[18px] leading-[1.72] text-cream/70">
+              <span aria-hidden className="mt-[0.85em] w-3 h-px bg-clay/60 shrink-0" />
+              <span className="font-['Cormorant_Garamond',serif] font-light text-[4.6vw] md:text-[18px] leading-[1.72] text-smoke">
                 {item}
               </span>
             </li>
@@ -127,13 +127,13 @@ function ReadNext({ currentSlug }: { currentSlug: string }) {
   const others = ARTICLES.filter((a) => a.published && a.slug !== currentSlug).slice(0, 2);
   if (others.length === 0) return null;
   return (
-    <aside className="mt-20 pt-10 border-t border-cream/12">
+    <aside className="mt-20 pt-10 border-t border-ink/12">
       <Eyebrow className="mb-7">Read next</Eyebrow>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {others.map((a) => (
           <Link key={a.slug} to={`${ROUTES.journal}/${a.slug}`} className="group block">
-            <Label className="text-ember/70">{a.category}</Label>
-            <Subheading className="mt-2 text-[5.5vw] md:text-[21px] group-hover:text-ember transition-colors duration-300">
+            <Label className="text-clay">{a.category}</Label>
+            <Subheading className="mt-2 text-[5.5vw] md:text-[21px] group-hover:text-clay transition-colors duration-300">
               {a.title}
             </Subheading>
           </Link>

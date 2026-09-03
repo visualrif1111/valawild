@@ -76,17 +76,17 @@ export default function Home() {
             All-inclusive, fully hosted, and prepared for over four months before you fly.
           </Body>
 
-          <div className="mt-10 w-full border border-cream/12 rounded-3xl p-8 md:p-10 bg-soot/40">
+          <div className="mt-10 w-full border border-ink/12 rounded-3xl p-8 md:p-10 bg-cream">
             <div className="flex flex-wrap items-center gap-4 mb-5">
-              <Label className="text-ember/80">{CONFIRMED_DEPARTURE.month}</Label>
-              <span className="w-1 h-1 rounded-full bg-cream/30" />
+              <Label className="text-clay">{CONFIRMED_DEPARTURE.month}</Label>
+              <span className="w-1 h-1 rounded-full bg-ink/30" />
               <Label>{CONFIRMED_DEPARTURE.status}</Label>
             </div>
             <Subheading>{CONFIRMED_DEPARTURE.title}</Subheading>
             <Body className="mt-4 max-w-xl">{CONFIRMED_DEPARTURE.description}</Body>
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Link to={ROUTES.kilimanjaro}
-                className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase bg-ember text-ink rounded-full px-8 py-4 hover:bg-flare transition-all duration-500">
+                className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase bg-clay text-paper rounded-full px-8 py-4 hover:bg-ember transition-all duration-500">
                 {CONFIRMED_DEPARTURE.cta}
               </Link>
               <CTAButton cta={SECONDARY_CTAS.waitlist} variant="quiet" />
@@ -107,7 +107,7 @@ export default function Home() {
         </Body>
         <div className="mt-8">
           <Link to={ROUTES.baseCamp}
-            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
             How Base Camp works
           </Link>
         </div>
@@ -173,7 +173,7 @@ export default function Home() {
         </Body>
         <div className="mt-8">
           <Link to={ROUTES.impact}
-            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
             Read the impact model
           </Link>
         </div>

@@ -9,7 +9,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
     <>
       <SkipLink />
       <Navigation />
-      <main id="main" className="relative w-full bg-ink min-h-screen overflow-x-hidden">{children}</main>
+      <main id="main" className="relative w-full bg-paper min-h-screen overflow-x-hidden">{children}</main>
       <Footer />
     </>
   );

@@ -34,9 +34,9 @@ export default function Journal() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
           {live.map((a) => (
             <Link key={a.slug} to={`${ROUTES.journal}/${a.slug}`}
-              className="group border-t border-cream/12 pt-6 block transition-colors duration-300 hover:border-ember/50">
-              <Label className="text-ember/70">{a.category}</Label>
-              <Subheading className="mt-3 group-hover:text-ember transition-colors duration-300">{a.title}</Subheading>
+              className="group border-t border-ink/12 pt-6 block transition-colors duration-300 hover:border-clay/50">
+              <Label className="text-clay">{a.category}</Label>
+              <Subheading className="mt-3 group-hover:text-clay transition-colors duration-300">{a.title}</Subheading>
               <Body className="mt-3">{a.summary}</Body>
             </Link>
           ))}
@@ -48,9 +48,9 @@ export default function Journal() {
         <Eyebrow className="mb-8">Coming shortly</Eyebrow>
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
           {soon.map((a) => (
-            <li key={a.slug} className="border-t border-cream/[0.07] pt-5">
-              <Label className="text-cream/25">{a.category}</Label>
-              <p className="font-['Cormorant_Garamond',serif] font-light text-[19px] leading-[1.4] text-cream/40 mt-2">
+            <li key={a.slug} className="border-t border-ink/10 pt-5">
+              <Label className="text-smoke/55">{a.category}</Label>
+              <p className="font-['Cormorant_Garamond',serif] font-light text-[19px] leading-[1.4] text-smoke/75 mt-2">
                 {a.title}
               </p>
             </li>

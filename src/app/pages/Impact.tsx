@@ -35,8 +35,8 @@ export default function Impact() {
         <Eyebrow className="mb-8">What we commit to</Eyebrow>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
           {COMMITMENTS.map((c, i) => (
-            <div key={c.title} className="border-t border-cream/12 pt-6">
-              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-ember/60">
+            <div key={c.title} className="border-t border-ink/12 pt-6">
+              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-moss">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <Subheading className="mt-3 text-[5.5vw] md:text-[23px]">{c.title}</Subheading>

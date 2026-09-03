@@ -83,7 +83,7 @@ export default function CreateYourOwnJourney() {
         <Heading className="max-w-2xl">Journeys built around who is actually travelling.</Heading>
         <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
           {AUDIENCES.map((a) => (
-            <div key={a.title} className="border-t border-cream/12 pt-6">
+            <div key={a.title} className="border-t border-ink/12 pt-6">
               <Subheading className="text-[5.5vw] md:text-[22px]">{a.title}</Subheading>
               <Body className="mt-3">{a.body}</Body>
             </div>
@@ -98,7 +98,7 @@ export default function CreateYourOwnJourney() {
         <div className="mt-12 flex flex-col gap-10">
           {SUPPORT.map((s, i) => (
             <div key={s.title} className="flex gap-7 items-start">
-              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-ember/60 pt-2 shrink-0">
+              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-clay/60 pt-2 shrink-0">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div>

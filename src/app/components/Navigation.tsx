@@ -14,7 +14,15 @@ import { PRIMARY_CTA } from '../data/ctas';
    never scrolled past or hidden behind the hamburger alone.
    ───────────────────────────────────────────────────────────────────────── */
 
-export function Navigation() {
+export function Navigation({ tone = 'light' }: { tone?: 'light' | 'dark' } = {}) {
+  /* 'light' = dark ink on the cream canvas (DS-01, the default).
+     'dark'  = cream over the immersive scroll scenes, which stay photographic. */
+  const dark = tone === 'dark';
+  const fg = dark ? 'text-cream' : 'text-ink';
+  const rule = dark ? 'bg-cream/50' : 'bg-ink/25';
+  const barBg = dark ? 'bg-ink/88' : 'bg-paper/92';
+  const barBorder = dark ? 'border-cream/10' : 'border-ink/10';
+  const dim = dark ? 'text-cream/45' : 'text-smoke/70';
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -59,7 +67,7 @@ export function Navigation() {
     );
 
   const Social = ({ className = '' }: { className?: string }) => (
-    <div className={`flex items-center gap-6 text-white ${className}`}>
+    <div className={`flex items-center gap-6 ${fg} ${className}`}>
       <a href="#" aria-label="Instagram" className="hover:opacity-70 transition-opacity duration-300 w-4 h-4">
         <svg className="block w-full h-full" fill="none" viewBox="0 0 14 14">
           <path d={svgPaths.p2a4356c0} fill="currentColor" />
@@ -92,15 +100,15 @@ export function Navigation() {
               <div className="flex md:hidden items-center justify-between w-full">
                 <div className="w-10 h-10" />
                 <Link to={ROUTES.home} onPointerDown={tap(ROUTES.home)} style={{ touchAction: 'manipulation' }}
-                  className="font-['Italiana',sans-serif] text-2xl text-white tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300">
+                  className={`font-['Italiana',sans-serif] text-2xl ${fg} tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300`}>
                   VALA WILD
                 </Link>
                 <button onPointerDown={openMenu} onClick={() => setMenuOpen(true)}
                   style={{ touchAction: 'manipulation' }} aria-label="Open menu"
-                  className="w-10 h-10 flex flex-col items-center justify-center gap-[5px] text-white">
-                  <span className="block w-5 h-[1.5px] bg-white rounded-full" />
-                  <span className="block w-5 h-[1.5px] bg-white rounded-full" />
-                  <span className="block w-5 h-[1.5px] bg-white rounded-full" />
+                  className={`w-10 h-10 flex flex-col items-center justify-center gap-[5px] ${fg}`}>
+                  <span className={`block w-5 h-[1.5px] ${dark ? 'bg-cream' : 'bg-ink'} rounded-full`} />
+                  <span className={`block w-5 h-[1.5px] ${dark ? 'bg-cream' : 'bg-ink'} rounded-full`} />
+                  <span className={`block w-5 h-[1.5px] ${dark ? 'bg-cream' : 'bg-ink'} rounded-full`} />
                 </button>
               </div>
 
@@ -112,15 +120,15 @@ export function Navigation() {
                 </div>
 
                 <Link to={ROUTES.home}
-                  className="font-['Italiana',sans-serif] text-3xl lg:text-[42px] text-white tracking-[0.1em] leading-none mb-4 hover:opacity-80 transition-opacity duration-300">
+                  className={`font-['Italiana',sans-serif] text-3xl lg:text-[42px] ${fg} tracking-[0.1em] leading-none mb-4 hover:opacity-80 transition-opacity duration-300`}>
                   VALA WILD
                 </Link>
-                <div className="w-[450px] h-[1px] bg-white/60 mb-6" />
+                <div className={`w-[450px] h-[1px] ${rule} mb-6`} />
 
-                <div className="flex items-center gap-9 font-['Kufam',sans-serif] text-[13px] lg:text-sm text-white tracking-widest uppercase">
+                <div className={`flex items-center gap-9 font-['Kufam',sans-serif] text-[13px] lg:text-sm ${fg} tracking-widest uppercase`}>
                   {TOP_NAV.map((item, i) => (
                     <React.Fragment key={item.to}>
-                      {i > 0 && <div className="w-[1px] h-5 bg-white/50" />}
+                      {i > 0 && <div className={`w-[1px] h-5 ${rule}`} />}
                       <div className="relative group">
                         <Link to={item.to} className={`py-2 block ${linkBase} ${active(item.to)}`}>
                           {item.label}
@@ -129,7 +137,7 @@ export function Navigation() {
                           /* Sub-pages reveal on hover — Sitemap V2 nests these under Kilimanjaro */
                           <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible
                                           group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <div className="flex flex-col gap-3 bg-ink/95 backdrop-blur-md border border-cream/10 rounded-2xl px-6 py-5 whitespace-nowrap">
+                            <div className={`flex flex-col gap-3 ${dark ? 'bg-ink/95 border-cream/10' : 'bg-paper/97 border-ink/10'} backdrop-blur-md border rounded-2xl px-6 py-5 whitespace-nowrap`}>
                               {item.children.map((child) => (
                                 <Link key={child.to} to={child.to}
                                   className={`text-[11px] tracking-[0.2em] ${linkBase} ${active(child.to)}`}>
@@ -157,18 +165,18 @@ export function Navigation() {
               /* Compact horizontal bar. The tall vertical column this replaced
                  was built for three links floating over full-bleed imagery; it
                  collided with page-level sticky sub-navs once the IA grew. */
-              className="absolute top-0 left-0 w-full pointer-events-auto bg-ink/88 backdrop-blur-md border-b border-cream/10"
+              className={`absolute top-0 left-0 w-full pointer-events-auto ${barBg} backdrop-blur-md border-b ${barBorder}`}
               style={{ height: 'var(--vw-nav-h)' }}
             >
               <div className="h-full max-w-7xl mx-auto px-8 md:px-16 flex items-center justify-between gap-6">
 
                 <Link to={ROUTES.home} onPointerDown={tap(ROUTES.home)} style={{ touchAction: 'manipulation' }}
-                  className="font-['Italiana',sans-serif] text-xl md:text-2xl text-white tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300 shrink-0">
+                  className={`font-['Italiana',sans-serif] text-xl md:text-2xl ${fg} tracking-[0.1em] leading-none hover:opacity-80 transition-opacity duration-300 shrink-0`}>
                   VALA WILD
                 </Link>
 
                 {/* DESKTOP links */}
-                <div className="hidden md:flex items-center gap-6 lg:gap-9 font-['Kufam',sans-serif] text-[11px] lg:text-[12px] text-white tracking-[0.14em] uppercase">
+                <div className={`hidden md:flex items-center gap-6 lg:gap-9 font-['Kufam',sans-serif] text-[11px] lg:text-[12px] ${fg} tracking-[0.14em] uppercase`}>
                   {TOP_NAV.map((item) => (
                     <div key={item.to} className="relative group">
                       <Link to={item.to} className={`py-2 block whitespace-nowrap ${linkBase} ${active(item.to)}`}>
@@ -177,7 +185,7 @@ export function Navigation() {
                       {item.children && (
                         <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible
                                         group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                          <div className="flex flex-col gap-3 bg-ink/95 backdrop-blur-md border border-cream/10 rounded-2xl px-6 py-5 whitespace-nowrap">
+                          <div className={`flex flex-col gap-3 ${dark ? 'bg-ink/95 border-cream/10' : 'bg-paper/97 border-ink/10'} backdrop-blur-md border rounded-2xl px-6 py-5 whitespace-nowrap`}>
                             {item.children.map((child) => (
                               <Link key={child.to} to={child.to}
                                 className={`text-[11px] tracking-[0.2em] ${linkBase} ${active(child.to)}`}>
@@ -199,10 +207,10 @@ export function Navigation() {
                 {/* MOBILE hamburger */}
                 <button onPointerDown={openMenu} onClick={() => setMenuOpen(true)}
                   style={{ touchAction: 'manipulation' }} aria-label="Open menu"
-                  className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] text-white -mr-2">
-                  <span className="block w-5 h-[1.5px] bg-white rounded-full" />
-                  <span className="block w-5 h-[1.5px] bg-white rounded-full" />
-                  <span className="block w-5 h-[1.5px] bg-white rounded-full" />
+                  className={`md:hidden w-10 h-10 flex flex-col items-center justify-center gap-[5px] ${fg} -mr-2`}>
+                  <span className={`block w-5 h-[1.5px] ${dark ? 'bg-cream' : 'bg-ink'} rounded-full`} />
+                  <span className={`block w-5 h-[1.5px] ${dark ? 'bg-cream' : 'bg-ink'} rounded-full`} />
+                  <span className={`block w-5 h-[1.5px] ${dark ? 'bg-cream' : 'bg-ink'} rounded-full`} />
                 </button>
               </div>
             </motion.nav>
@@ -218,36 +226,36 @@ export function Navigation() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: 'easeInOut' }}
             className="fixed inset-0 z-[60] md:hidden flex flex-col items-center justify-center overflow-y-auto py-20"
-            style={{ background: 'rgba(16,12,9,0.975)', backdropFilter: 'blur(10px)' }}
+            style={{ background: dark ? 'rgba(16,12,9,0.975)' : 'rgba(251,244,233,0.975)', backdropFilter: 'blur(10px)' }}
           >
             <button onPointerDown={closeMenu} onClick={() => setMenuOpen(false)}
               style={{ touchAction: 'manipulation' }} aria-label="Close menu"
-              className="absolute top-10 right-8 w-12 h-12 flex items-center justify-center text-white/60 hover:text-white transition-colors duration-200">
+              className={`absolute top-10 right-8 w-12 h-12 flex items-center justify-center ${dim} hover:${fg} transition-colors duration-200`}>
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M1 1L17 17M17 1L1 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
 
             <Link to={ROUTES.home} onPointerDown={tap(ROUTES.home)} style={{ touchAction: 'manipulation' }}
-              className="font-['Italiana',sans-serif] text-3xl text-white tracking-[0.1em] mb-8">
+              className={`font-['Italiana',sans-serif] text-3xl ${fg} tracking-[0.1em] mb-8`}>
               VALA WILD
             </Link>
 
-            <div className="w-16 h-px bg-white/20 mb-6" />
+            <div className={`w-16 h-px ${rule} mb-6`} />
 
             <nav className="flex flex-col items-center w-full">
               {TOP_NAV.map(({ to, label, children }) => (
                 <div key={to} className="w-full flex flex-col items-center">
                   <Link to={to} onPointerDown={tap(to)} style={{ touchAction: 'manipulation' }}
                     className={`w-full text-center py-5 font-['Kufam',sans-serif] text-sm tracking-[0.28em] uppercase transition-all duration-300 ${
-                      isActive(to) ? 'text-white' : 'text-white/45 hover:text-white'}`}>
+                      isActive(to) ? fg : `${dim} hover:${fg}`}`}>
                     {label}
                   </Link>
                   {children?.map((child) => (
                     <Link key={child.to} to={child.to} onPointerDown={tap(child.to)}
                       style={{ touchAction: 'manipulation' }}
                       className={`w-full text-center pb-4 font-['Kufam',sans-serif] text-[10px] tracking-[0.24em] uppercase transition-all duration-300 ${
-                        isActive(child.to) ? 'text-ember' : 'text-white/30 hover:text-white/70'}`}>
+                        isActive(child.to) ? 'text-clay' : dim}`}>
                       {child.label}
                     </Link>
                   ))}
@@ -255,16 +263,16 @@ export function Navigation() {
               ))}
             </nav>
 
-            <div className="w-16 h-px bg-white/20 mt-6 mb-8" />
+            <div className={`w-16 h-px ${rule} mt-6 mb-8`} />
 
             {/* Primary CTA reachable without closing the menu */}
             <NavCTA />
 
-            <p className="font-['Cormorant_Garamond',serif] italic font-light text-[14px] text-white/30 mt-5 px-10 text-center">
+            <p className={`font-['Cormorant_Garamond',serif] italic font-light text-[14px] ${dim} mt-5 px-10 text-center`}>
               {BRAND.aside}
             </p>
 
-            <Social className="mt-8 text-white/35" />
+            <Social className="mt-8" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -274,5 +282,5 @@ export function Navigation() {
 
 const ctaClass = (compact: boolean) =>
   "inline-flex items-center justify-center font-['Kufam',sans-serif] uppercase tracking-[0.16em] " +
-  `text-[10px] leading-none rounded-full bg-ember text-ink transition-all duration-500 hover:bg-flare ${
+  `text-[10px] leading-none rounded-full bg-clay text-paper transition-all duration-500 hover:bg-ember ${
     compact ? 'px-5 py-3' : 'px-8 py-4 text-[11px]'}`;

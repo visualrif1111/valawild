@@ -50,15 +50,15 @@ export default function Contact() {
               </div>
             ) : (
               /* Calendly not yet configured — the enquiry form carries the load */
-              <p className="font-['Cormorant_Garamond',serif] italic font-light text-[15px] text-cream/40 mt-8">
+              <p className="font-['Cormorant_Garamond',serif] italic font-light text-[15px] text-smoke/75 mt-8">
                 Scheduling opens shortly — send the form and we’ll offer you times.
               </p>
             )}
 
-            <div className="mt-10 pt-8 border-t border-cream/12">
+            <div className="mt-10 pt-8 border-t border-ink/12">
               <Eyebrow className="mb-4">Prefer email?</Eyebrow>
               <a href={`mailto:${BRAND.email}`}
-                className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+                className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
                 {BRAND.email}
               </a>
               <Body className="mt-5 text-[15px]">We reply within two working days.</Body>

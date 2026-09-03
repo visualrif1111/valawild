@@ -33,10 +33,10 @@ export default function WaitlistForm() {
 
   return (
     <div id="waitlist" className="w-full max-w-xl" style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }}>
-      <p className="font-['Cormorant_Garamond',serif] font-light text-[18px] leading-[1.6] text-cream/75">
+      <p className="font-['Cormorant_Garamond',serif] font-light text-[18px] leading-[1.6] text-smoke">
         {WAITLIST.prompt}
       </p>
-      <p className="font-['Cormorant_Garamond',serif] font-light italic text-[15px] leading-[1.7] text-cream/45 mt-2">
+      <p className="font-['Cormorant_Garamond',serif] font-light italic text-[15px] leading-[1.7] text-smoke/75 mt-2">
         {WAITLIST.support}
       </p>
 
@@ -45,7 +45,7 @@ export default function WaitlistForm() {
       ) : settled ? (
         <p
           role="status"
-          className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-ember mt-7 leading-relaxed"
+          className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-clay mt-7 leading-relaxed"
         >
           {state === 'duplicate' ? WAITLIST.states.duplicate : WAITLIST.states.success}
         </p>
@@ -59,8 +59,8 @@ export default function WaitlistForm() {
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First name (optional)"
               autoComplete="given-name"
-              className="flex-1 bg-transparent border-b border-cream/20 focus:border-ember/70 outline-none
-                         font-['Cormorant_Garamond',serif] text-[17px] text-cream placeholder:text-cream/30
+              className="flex-1 bg-transparent border-b border-ink/20 focus:border-clay outline-none
+                         font-['Cormorant_Garamond',serif] text-[17px] text-ink placeholder:text-smoke/60
                          py-3 transition-colors duration-300"
             />
             <input
@@ -72,19 +72,19 @@ export default function WaitlistForm() {
               autoComplete="email"
               aria-invalid={invalid}
               aria-label="Email address"
-              className="flex-1 bg-transparent border-b border-cream/20 focus:border-ember/70 outline-none
-                         font-['Cormorant_Garamond',serif] text-[17px] text-cream placeholder:text-cream/30
+              className="flex-1 bg-transparent border-b border-ink/20 focus:border-clay outline-none
+                         font-['Cormorant_Garamond',serif] text-[17px] text-ink placeholder:text-smoke/60
                          py-3 transition-colors duration-300"
             />
           </div>
 
           {invalid && (
-            <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-flare/80">
+            <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-clay">
               Please enter a valid email address.
             </p>
           )}
           {state === 'error' && (
-            <p role="alert" className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-flare/80">
+            <p role="alert" className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-clay">
               {WAITLIST.states.error}
             </p>
           )}
@@ -93,7 +93,7 @@ export default function WaitlistForm() {
             type="submit"
             disabled={state === 'submitting'}
             className="self-start mt-2 font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase
-                       text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember
+                       text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay
                        transition-all duration-300 disabled:opacity-40"
           >
             {state === 'submitting' ? 'Joining…' : WAITLIST.cta}

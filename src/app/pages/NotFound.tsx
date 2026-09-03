@@ -20,7 +20,7 @@ export default function NotFound() {
           <div className="mt-10 flex flex-col items-center gap-6">
             <CTAButton cta={PRIMARY_CTA} variant="primary" />
             <Link to={ROUTES.home}
-              className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-cream/60 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+              className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke/90 border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
               Back to the beginning
             </Link>
           </div>

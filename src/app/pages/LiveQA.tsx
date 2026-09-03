@@ -35,14 +35,14 @@ export default function LiveQA() {
       </section>
 
       <Section width="default">
-        <div className="border border-cream/12 rounded-3xl p-8 md:p-12 bg-soot/40">
-          <Label className="text-ember/80">Next session</Label>
+        <div className="border border-ink/12 rounded-3xl p-8 md:p-12 bg-cream">
+          <Label className="text-clay">Next session</Label>
           <Heading className="mt-4">Couch to Kili</Heading>
           <Body className="mt-4 max-w-xl">
             Fortnightly, live, roughly forty-five minutes. Dates are announced by email —
             register once and you’ll get the invitation each time.
           </Body>
-          <p className="font-['Cormorant_Garamond',serif] italic font-light text-[15px] text-cream/40 mt-6">
+          <p className="font-['Cormorant_Garamond',serif] italic font-light text-[15px] text-smoke/75 mt-6">
             {/* TODO: replace with live event dates once scheduling is confirmed */}
             Next date to be announced.
           </p>
@@ -54,8 +54,8 @@ export default function LiveQA() {
         <ul className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5">
           {PROMPTS.map((p) => (
             <li key={p} className="flex gap-4 items-start">
-              <span aria-hidden className="mt-3 w-3 h-px bg-ember/60 shrink-0" />
-              <span className="font-['Cormorant_Garamond',serif] italic font-light text-[18px] leading-[1.6] text-cream/70">{p}</span>
+              <span aria-hidden className="mt-3 w-3 h-px bg-clay/60 shrink-0" />
+              <span className="font-['Cormorant_Garamond',serif] italic font-light text-[18px] leading-[1.6] text-smoke">{p}</span>
             </li>
           ))}
         </ul>

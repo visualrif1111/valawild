@@ -54,8 +54,8 @@ export default function BaseCamp() {
         <Eyebrow className="mb-8">The four months</Eyebrow>
         <div className="flex flex-col gap-10">
           {STAGES.map((s) => (
-            <div key={s.when} className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 md:gap-10 border-t border-cream/12 pt-6">
-              <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.24em] uppercase text-ember/70 pt-1">{s.when}</p>
+            <div key={s.when} className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 md:gap-10 border-t border-ink/12 pt-6">
+              <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.24em] uppercase text-moss pt-1">{s.when}</p>
               <div>
                 <Subheading className="text-[5.5vw] md:text-[23px]">{s.title}</Subheading>
                 <Body className="mt-3 max-w-2xl">{s.body}</Body>

@@ -31,13 +31,13 @@ export default function CTAStrip({
         />
 
         {heading && (
-          <h2 className="font-['Italiana',serif] text-[8vw] md:text-[42px] leading-[1.1] text-cream tracking-[0.03em]">
+          <h2 className="font-['Italiana',serif] text-[8vw] md:text-[42px] leading-[1.1] text-ink tracking-[0.03em]">
             {heading}
           </h2>
         )}
 
         {body && (
-          <p className="font-['Cormorant_Garamond',serif] font-light text-[4.5vw] md:text-[19px] leading-[1.7] text-cream/70 mt-6">
+          <p className="font-['Cormorant_Garamond',serif] font-light text-[4.5vw] md:text-[19px] leading-[1.7] text-smoke mt-6">
             {body}
           </p>
         )}
@@ -46,7 +46,7 @@ export default function CTAStrip({
           <CTAButton cta={PRIMARY_CTA} variant="primary" />
 
           {PRIMARY_CTA.support && (
-            <p className="font-['Cormorant_Garamond',serif] italic font-light text-[15px] leading-relaxed text-cream/45 max-w-md">
+            <p className="font-['Cormorant_Garamond',serif] italic font-light text-[15px] leading-relaxed text-smoke/75 max-w-md">
               {PRIMARY_CTA.support}
             </p>
           )}

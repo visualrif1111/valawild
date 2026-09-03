@@ -76,13 +76,13 @@ export default function Kilimanjaro() {
 
       {/* ── Anchor nav — long page, must stay skimmable ─────────────────── */}
       <nav
-        className="sticky z-30 w-full bg-ink/92 backdrop-blur-md border-b border-cream/10"
+        className="sticky z-30 w-full bg-paper/92 backdrop-blur-md border-b border-ink/12"
         style={{ top: 'var(--vw-nav-h)' }}
       >
         <div className="max-w-6xl mx-auto px-6 md:px-16 flex gap-x-8 gap-y-2 overflow-x-auto py-4 justify-start md:justify-center">
           {ANCHORS.map((a) => (
             <a key={a.to} href={a.to}
-              className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] uppercase text-cream/50 hover:text-ember whitespace-nowrap transition-colors duration-300">
+              className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] uppercase text-smoke/85 hover:text-clay whitespace-nowrap transition-colors duration-300">
               {a.label}
             </a>
           ))}
@@ -94,10 +94,10 @@ export default function Kilimanjaro() {
         <Eyebrow className="mb-8">At a glance</Eyebrow>
         <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
           {QUICK_FACTS.map((f) => (
-            <div key={f.label} className="border-t border-cream/12 pt-5">
+            <div key={f.label} className="border-t border-ink/12 pt-5">
               <dt><Label>{f.label}</Label></dt>
-              <dd className="font-['Cormorant_Garamond',serif] font-light text-[18px] leading-[1.45] text-cream/85 mt-2">
-                {f.value ?? <span className="text-cream/30 italic text-[15px]">To be confirmed</span>}
+              <dd className="font-['Cormorant_Garamond',serif] font-light text-[18px] leading-[1.45] text-ink/85 mt-2">
+                {f.value ?? <span className="text-smoke/60 italic text-[15px]">To be confirmed</span>}
               </dd>
             </div>
           ))}
@@ -126,24 +126,24 @@ export default function Kilimanjaro() {
         <Eyebrow className="mb-6">Upcoming Kilimanjaro departures</Eyebrow>
 
         {/* Confirmed departure — visually dominant */}
-        <div className="w-full border border-ember/25 rounded-3xl p-8 md:p-12 bg-soot/50">
+        <div className="w-full border border-ember/25 rounded-3xl p-8 md:p-12 bg-cream">
           <div className="flex flex-wrap items-center gap-4 mb-6">
-            <Label className="text-ember/85">{CONFIRMED_DEPARTURE.month}</Label>
-            <span className="w-1 h-1 rounded-full bg-cream/30" />
+            <Label className="text-clay">{CONFIRMED_DEPARTURE.month}</Label>
+            <span className="w-1 h-1 rounded-full bg-ink/30" />
             <Label>{CONFIRMED_DEPARTURE.status}</Label>
           </div>
           <Heading>{CONFIRMED_DEPARTURE.title}</Heading>
           <Body className="mt-5 max-w-2xl">{CONFIRMED_DEPARTURE.description}</Body>
           <div className="mt-9">
             <a href="#enquire"
-              className="inline-flex font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase bg-ember text-ink rounded-full px-9 py-4 hover:bg-flare transition-all duration-500">
+              className="inline-flex font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase bg-clay text-paper rounded-full px-9 py-4 hover:bg-ember transition-all duration-500">
               {CONFIRMED_DEPARTURE.cta}
             </a>
           </div>
         </div>
 
         {/* Waitlist — deliberately secondary, stacked beneath, never side-by-side */}
-        <div className="mt-14 pt-12 border-t border-cream/10">
+        <div className="mt-14 pt-12 border-t border-ink/12">
           <WaitlistForm />
         </div>
       </Section>
@@ -157,8 +157,8 @@ export default function Kilimanjaro() {
             <ul className="mt-6 flex flex-col gap-4">
               {INCLUDED.map((item) => (
                 <li key={item} className="flex gap-4 items-start">
-                  <span aria-hidden className="mt-2.5 w-3 h-px bg-ember/70 shrink-0" />
-                  <span className="font-['Cormorant_Garamond',serif] font-light text-[17px] leading-[1.6] text-cream/75">{item}</span>
+                  <span aria-hidden className="mt-2.5 w-3 h-px bg-moss shrink-0" />
+                  <span className="font-['Cormorant_Garamond',serif] font-light text-[17px] leading-[1.6] text-smoke">{item}</span>
                 </li>
               ))}
             </ul>
@@ -168,8 +168,8 @@ export default function Kilimanjaro() {
             <ul className="mt-6 flex flex-col gap-4">
               {NOT_INCLUDED.map((item) => (
                 <li key={item} className="flex gap-4 items-start">
-                  <span aria-hidden className="mt-2.5 w-3 h-px bg-cream/25 shrink-0" />
-                  <span className="font-['Cormorant_Garamond',serif] font-light text-[17px] leading-[1.6] text-cream/50">{item}</span>
+                  <span aria-hidden className="mt-2.5 w-3 h-px bg-ink/25 shrink-0" />
+                  <span className="font-['Cormorant_Garamond',serif] font-light text-[17px] leading-[1.6] text-smoke/85">{item}</span>
                 </li>
               ))}
             </ul>
@@ -188,7 +188,7 @@ export default function Kilimanjaro() {
         </Body>
         <div className="mt-8">
           <Link to={ROUTES.baseCamp}
-            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
             Inside Base Camp
           </Link>
         </div>
@@ -218,7 +218,7 @@ export default function Kilimanjaro() {
         <Eyebrow className="mb-6">The questions everyone asks</Eyebrow>
         <div className="mt-10 flex flex-col gap-10">
           {OBJECTIONS.map((o) => (
-            <div key={o.q} className="border-t border-cream/12 pt-6">
+            <div key={o.q} className="border-t border-ink/12 pt-6">
               <Subheading className="text-[5.5vw] md:text-[23px]">{o.q}</Subheading>
               <Body className="mt-3 max-w-2xl">{o.a}</Body>
             </div>
@@ -226,7 +226,7 @@ export default function Kilimanjaro() {
         </div>
         <div className="mt-10">
           <Link to={ROUTES.faq}
-            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-cream/70 border-b border-cream/25 pb-1 hover:text-cream hover:border-ember transition-all duration-300">
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
             All questions
           </Link>
         </div>

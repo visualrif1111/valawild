@@ -12,11 +12,11 @@ import FormsOffline from './FormsOffline';
    ───────────────────────────────────────────────────────────────────────── */
 
 const FIELD =
-  'w-full bg-transparent border-b border-cream/20 focus:border-ember/70 outline-none ' +
-  "font-['Cormorant_Garamond',serif] text-[17px] text-cream placeholder:text-cream/30 " +
+  'w-full bg-transparent border-b border-ink/20 focus:border-clay outline-none ' +
+  "font-['Cormorant_Garamond',serif] text-[17px] text-ink placeholder:text-smoke/60 " +
   'py-3 transition-colors duration-300';
 
-const LABEL = "font-['Kufam',sans-serif] text-[9px] tracking-[0.28em] uppercase text-cream/40 mb-1 block";
+const LABEL = "font-['Kufam',sans-serif] text-[9px] tracking-[0.28em] uppercase text-smoke/75 mb-1 block";
 
 export default function EnquiryForm({
   endpoint,
@@ -61,7 +61,7 @@ export default function EnquiryForm({
     return (
       <div id={id} className="w-full max-w-xl scroll-mt-32">
         {prompt && (
-          <p className="font-['Cormorant_Garamond',serif] font-light italic text-[17px] leading-[1.7] text-cream/55">
+          <p className="font-['Cormorant_Garamond',serif] font-light italic text-[17px] leading-[1.7] text-smoke/85">
             {prompt}
           </p>
         )}
@@ -73,10 +73,10 @@ export default function EnquiryForm({
   if (state === 'success') {
     return (
       <div id={id} className="w-full max-w-xl" style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }}>
-        <p role="status" className="font-['Italiana',serif] text-[28px] text-cream leading-tight">
+        <p role="status" className="font-['Italiana',serif] text-[28px] text-ink leading-tight">
           Thank you — that’s with us.
         </p>
-        <p className="font-['Cormorant_Garamond',serif] font-light text-[17px] leading-[1.7] text-cream/60 mt-3">
+        <p className="font-['Cormorant_Garamond',serif] font-light text-[17px] leading-[1.7] text-smoke/90 mt-3">
           Vicky reads every enquiry personally. You’ll hear back within two working days.
         </p>
       </div>
@@ -86,7 +86,7 @@ export default function EnquiryForm({
   return (
     <form id={id} onSubmit={onSubmit} className="w-full max-w-xl flex flex-col gap-7" style={{ scrollMarginTop: 'calc(var(--vw-nav-h) + var(--vw-subnav-h) + 1rem)' }} noValidate>
       {prompt && (
-        <p className="font-['Cormorant_Garamond',serif] font-light italic text-[17px] leading-[1.7] text-cream/55">
+        <p className="font-['Cormorant_Garamond',serif] font-light italic text-[17px] leading-[1.7] text-smoke/85">
           {prompt}
         </p>
       )}
@@ -103,7 +103,7 @@ export default function EnquiryForm({
                onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)}
                autoComplete="email" aria-invalid={invalid} />
         {invalid && (
-          <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-flare/80 mt-2">
+          <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-clay mt-2">
             Please enter a valid email address.
           </p>
         )}
@@ -114,10 +114,10 @@ export default function EnquiryForm({
           <label className={LABEL} htmlFor={`${id}-group`}>Travelling as (optional)</label>
           <select id={`${id}-group`} value={group} onChange={(e) => setGroup(e.target.value)}
                   className={`${FIELD} appearance-none cursor-pointer`}>
-            <option value=""       className="bg-ink">Prefer not to say</option>
-            <option value="solo"   className="bg-ink">On my own</option>
-            <option value="pair"   className="bg-ink">With one other person</option>
-            <option value="group"  className="bg-ink">With a group</option>
+            <option value=""       className="bg-paper">Prefer not to say</option>
+            <option value="solo"   className="bg-paper">On my own</option>
+            <option value="pair"   className="bg-paper">With one other person</option>
+            <option value="group"  className="bg-paper">With a group</option>
           </select>
         </div>
       )}
@@ -134,7 +134,7 @@ export default function EnquiryForm({
       {tripReference && <input type="hidden" name="trip" value={tripReference} />}
 
       {state === 'error' && (
-        <p role="alert" className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-flare/80">
+        <p role="alert" className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-clay">
           Something went wrong. Please try again.
         </p>
       )}
@@ -143,7 +143,7 @@ export default function EnquiryForm({
         type="submit"
         disabled={state === 'submitting'}
         className="self-start font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase
-                   bg-ember text-ink rounded-full px-9 py-4 hover:bg-flare transition-all duration-500
+                   bg-clay text-paper rounded-full px-9 py-4 hover:bg-ember transition-all duration-500
                    disabled:opacity-40"
       >
         {state === 'submitting' ? 'Sending…' : submitLabel}
