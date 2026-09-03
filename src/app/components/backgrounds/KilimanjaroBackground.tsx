@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
-import moubntSrc from '../../../assets/MOUBNT.svg';
+/* Rasterised from MOUBNT.svg (5.8 MB -> 612 KB). The source was a painterly
+   illustration exported as vector, which SVG stores badly; aspect is preserved
+   (1600x7980 ~= the original 740.44x3692.27 viewBox). */
+import moubntSrc from '../../../assets/scenes/kilimanjaro-ascent.webp';
 
 const BASE_COLOR = '#050810';
 

@@ -201,7 +201,7 @@ export default function SafariEditorial() {
             <stop offset="0%"   stopColor="#FFBF00" stopOpacity="0.26" />
             <stop offset="100%" stopColor="#FFBF00" stopOpacity="0.02" />
           </linearGradient>
-          <filter id="blur-sm"><feGaussianBlur stdDeviation="0.5" /></filter>
+          <filter id="blur-sm" filterUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><feGaussianBlur stdDeviation="0.5" /></filter>
         </defs>
         <path d={PATH} stroke="url(#tglow)" strokeWidth="10" fill="none" filter="url(#blur-sm)" />
         <path d={PATH} stroke="url(#tg)"    strokeWidth="1.6" fill="none" />
