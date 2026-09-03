@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
@@ -12,7 +13,10 @@ import { ROUTES } from '../data/site';
 /* Journal / Guides / Resources — FS 6.6. SEO/GEO and pre-conversion education. */
 
 export default function Journal() {
-  const live = ARTICLES.filter((a) => a.published);
+  const [filter, setFilter] = useState<string>('All');
+  const published = ARTICLES.filter((a) => a.published);
+  const categories = ['All', ...Array.from(new Set(published.map((a) => a.category)))];
+  const live = filter === 'All' ? published : published.filter((a) => a.category === filter);
   const soon = ARTICLES.filter((a) => !a.published);
 
   return (
@@ -30,7 +34,25 @@ export default function Journal() {
       </section>
 
       <Section width="wide">
-        <Eyebrow className="mb-8">Guides & resources</Eyebrow>
+        <Eyebrow className="mb-6">Guides &amp; resources</Eyebrow>
+
+        {/* Category filter — wireframe 06.07 */}
+        <div className="flex flex-wrap gap-3 mb-10" role="group" aria-label="Filter by category">
+          {categories.map((c) => (
+            <button
+              key={c}
+              onClick={() => setFilter(c)}
+              aria-pressed={filter === c}
+              className={`font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] uppercase rounded-full px-5 py-2.5 transition-all duration-300 ${
+                filter === c
+                  ? 'bg-moss text-paper'
+                  : 'border border-ink/20 text-smoke hover:border-moss hover:text-moss'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
           {live.map((a) => (
             <Link key={a.slug} to={`${ROUTES.journal}/${a.slug}`}

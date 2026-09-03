@@ -1,10 +1,12 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
 import { BandRule } from '../components/editorial/Poster';
-import { Eyebrow, Display, Heading, Body, Lede, Quote } from '../components/editorial/Type';
+import { Eyebrow, Display, Heading, Subheading, Body, Lede, Quote, Label } from '../components/editorial/Type';
 import { Horizon } from '../components/editorial/Arc';
 import CTAStrip from '../components/cta/CTAStrip';
 import { SECONDARY_CTAS } from '../data/ctas';
+import { ROUTES } from '../data/site';
+import { Link } from 'react-router';
 import { BRAND } from '../data/site';
 
 /* About Vala / About Vicky — FS 6.4. Trust-focused, not autobiography. */
@@ -58,6 +60,47 @@ export default function About() {
         </Body>
       </Section>
 
+      {/* ── Values — wireframe 04.05 ─────────────────────────────────────── */}
+      <Section width="wide">
+        <Eyebrow className="mb-8">What we hold to</Eyebrow>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+          {VALUES.map((v, i) => (
+            <div key={v.title} className="border-t border-ink/12 pt-6">
+              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-moss">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <Subheading className="mt-3 text-[5.5vw] md:text-[23px]">{v.title}</Subheading>
+              <Body className="mt-3">{v.body}</Body>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <BandRule className="my-4" />
+
+      {/* ── Where to go next — wireframe 04.06 / 04.07 ────────────────────── */}
+      <Section width="default">
+        <Eyebrow className="mb-8">Two ways to travel with us</Eyebrow>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <Link to={ROUTES.kilimanjaro} className="group border border-ink/12 rounded-3xl p-8 bg-cream hover:border-clay transition-colors duration-300">
+            <Label className="text-clay">Hosted group adventure</Label>
+            <Subheading className="mt-3 group-hover:text-clay transition-colors duration-300">Mount Kilimanjaro</Subheading>
+            <Body className="mt-3">
+              The flagship journey. Solo-first, all-inclusive, with four months of
+              preparation behind you before you fly.
+            </Body>
+          </Link>
+          <Link to={ROUTES.ownJourney} className="group border border-ink/12 rounded-3xl p-8 bg-cream hover:border-moss transition-colors duration-300">
+            <Label className="text-moss">Private journeys</Label>
+            <Subheading className="mt-3 group-hover:text-moss transition-colors duration-300">Create Your Own Journey</Subheading>
+            <Body className="mt-3">
+              For people who already have their own. Same partners, same care, paced
+              entirely to you.
+            </Body>
+          </Link>
+        </div>
+      </Section>
+
       <CTAStrip
         heading="Ask Vicky anything."
         secondary={[SECONDARY_CTAS.contact, SECONDARY_CTAS.liveQA]}
@@ -65,3 +108,12 @@ export default function About() {
     </PageShell>
   );
 }
+
+/* Wireframe 04.05 — the values module. Kept to four, and specific enough that
+   each one implies a decision rather than a slogan. */
+const VALUES = [
+  { title: 'Solo first, always',      body: 'Every decision — group size, Base Camp, room bookings, pacing — is made for the person arriving on their own.' },
+  { title: 'Honest before reassuring', body: 'We will tell you the uncomfortable parts of travelling to Tanzania as a queer woman rather than discover them together at the airport.' },
+  { title: 'Local by design',          body: 'Local partners, local crews, paid properly. Built into how a trip is constructed rather than added afterwards.' },
+  { title: 'Small and finished',       body: 'We would rather run fewer trips properly than more trips loosely. That is a limit on growth, and we accept it.' },
+];

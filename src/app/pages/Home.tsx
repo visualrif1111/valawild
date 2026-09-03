@@ -10,6 +10,7 @@ import GuideDownload from '../components/cta/GuideDownload';
 import { PRIMARY_CTA, SECONDARY_CTAS } from '../data/ctas';
 import { ROUTES, BRAND } from '../data/site';
 import { CONFIRMED_DEPARTURE, OBJECTIONS } from '../data/kilimanjaro';
+import { ARTICLES } from '../data/journal';
 
 /* Homepage — FS 6.1. Sitemap V2 places both CTAs (Book, Contact Us) here. */
 
@@ -161,6 +162,46 @@ export default function Home() {
         </Body>
         <div className="mt-8">
           <CTAButton cta={SECONDARY_CTAS.ownJourney} variant="secondary" />
+        </div>
+      </Section>
+
+      {/* ── About / founder teaser — wireframe 01.06 ─────────────────────── */}
+      <Section width="narrow">
+        <Eyebrow className="mb-6">The person behind it</Eyebrow>
+        <Heading>Vicky has done this before.</Heading>
+        <Body className="mt-7">
+          She has climbed Kilimanjaro, and she has watched people who were certain they
+          could not do it reach the summit anyway. Vala Wild exists because the trip she
+          wanted — hosted, queer, built for arriving alone — did not.
+        </Body>
+        <div className="mt-8">
+          <Link to={ROUTES.about}
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
+            About Vicky
+          </Link>
+        </div>
+      </Section>
+
+      {/* ── Journal / Guides teaser — wireframe 01.08 ─────────────────────── */}
+      <Section width="wide">
+        <Eyebrow className="mb-6">Journal, guides &amp; resources</Eyebrow>
+        <Heading className="max-w-2xl">Everything we know, written down.</Heading>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-10">
+          {ARTICLES.filter((a) => a.published).slice(0, 3).map((a) => (
+            <Link key={a.slug} to={`${ROUTES.journal}/${a.slug}`}
+              className="group border-t border-ink/12 pt-6 block hover:border-clay transition-colors duration-300">
+              <Label className="text-clay">{a.category}</Label>
+              <Subheading className="mt-2 text-[5.5vw] md:text-[21px] group-hover:text-clay transition-colors duration-300">
+                {a.title}
+              </Subheading>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-10">
+          <Link to={ROUTES.journal}
+            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
+            All guides &amp; resources
+          </Link>
         </div>
       </Section>
 

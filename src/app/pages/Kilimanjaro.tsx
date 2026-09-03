@@ -11,7 +11,7 @@ import EnquiryForm from '../components/cta/EnquiryForm';
 import { PRIMARY_CTA, SECONDARY_CTAS } from '../data/ctas';
 import { INTEGRATIONS } from '../data/integrations';
 import { ROUTES } from '../data/site';
-import { QUICK_FACTS, CONFIRMED_DEPARTURE, PREPARATION, OBJECTIONS } from '../data/kilimanjaro';
+import { QUICK_FACTS, CONFIRMED_DEPARTURE, PREPARATION, OBJECTIONS, ITINERARY } from '../data/kilimanjaro';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    KILIMANJARO — the flagship commercial page. FS 6.2 / 6.2A.
@@ -25,8 +25,10 @@ import { QUICK_FACTS, CONFIRMED_DEPARTURE, PREPARATION, OBJECTIONS } from '../da
 const ANCHORS = [
   { label: 'The trip',    to: '#trip' },
   { label: 'Departures',  to: '#departures' },
+  { label: 'Itinerary',   to: '#itinerary' },
   { label: 'Included',    to: '#included' },
   { label: 'Training',    to: '#training' },
+  { label: 'Base Camp',   to: '#base-camp' },
   { label: 'Safety',      to: '#safety' },
   { label: 'Questions',   to: '#faq' },
 ];
@@ -147,6 +149,32 @@ export default function Kilimanjaro() {
         </div>
       </Section>
 
+      {/* ── Itinerary summary — wireframe 02.04 ──────────────────────────── */}
+      <Section width="default" id="itinerary">
+        <Eyebrow className="mb-6">How the trip runs</Eyebrow>
+        <Heading>Itinerary summary</Heading>
+        <Body className="mt-6 max-w-2xl">
+          The shape is fixed even where the exact route is not. Day counts are confirmed
+          with your departure.
+        </Body>
+        <ol className="mt-12 flex flex-col">
+          {ITINERARY.map((step, i) => (
+            <li key={step.phase} className="grid grid-cols-[auto_1fr] gap-6 md:gap-10 pb-10">
+              <div className="flex flex-col items-center">
+                <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-clay pt-1">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                {i < ITINERARY.length - 1 && <span aria-hidden className="flex-1 w-px bg-ink/15 mt-3" />}
+              </div>
+              <div>
+                <Subheading className="text-[5.5vw] md:text-[23px]">{step.phase}</Subheading>
+                <Body className="mt-2 max-w-2xl">{step.body}</Body>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
       {/* ── Included / not included ────────────────────────────────────── */}
       <Section width="default" id="included">
         <Eyebrow className="mb-6">All-inclusive, and what that means</Eyebrow>
@@ -185,11 +213,36 @@ export default function Kilimanjaro() {
           {PREPARATION.bookingWindow}, and {PREPARATION.trainingPeriod.toLowerCase()} —
           structured, shared, and run alongside everyone else going on your departure.
         </Body>
-        <div className="mt-8">
-          <Link to={ROUTES.baseCamp}
-            className="font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase text-smoke border-b border-ink/20 pb-1 hover:text-ink hover:border-clay transition-all duration-300">
-            Inside Base Camp
-          </Link>
+      </Section>
+
+      {/* ── Base Camp module — wireframe 02.07 ───────────────────────────── */}
+      <Section width="default" id="base-camp">
+        <div className="border border-moss/35 rounded-3xl p-8 md:p-12 bg-cream">
+          <Label className="text-moss">Included with every departure</Label>
+          <Heading className="mt-4">Base Camp</Heading>
+          <Body className="mt-5 max-w-2xl">
+            The four months before you fly are part of the trip. You train alongside the
+            people you will be walking with, ask the questions you would not ask a
+            stranger, and land into a group rather than a hotel lobby.
+          </Body>
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              ['Structured training', 'A shared plan, built around where you are starting from.'],
+              ['Kit and logistics',   'What to buy, what to hire, what not to waste money on.'],
+              ['The group',           'Formed months in advance, so nobody arrives alone.'],
+            ].map(([t, b]) => (
+              <div key={t} className="border-t border-ink/12 pt-4">
+                <p className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] uppercase text-moss">{t}</p>
+                <Body className="mt-2 text-[16px]">{b}</Body>
+              </div>
+            ))}
+          </div>
+          <div className="mt-9">
+            <Link to={ROUTES.baseCamp}
+              className="inline-flex font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase border border-moss/45 text-moss rounded-full px-8 py-3.5 hover:bg-moss hover:text-paper transition-all duration-300">
+              Inside Base Camp
+            </Link>
+          </div>
         </div>
       </Section>
 

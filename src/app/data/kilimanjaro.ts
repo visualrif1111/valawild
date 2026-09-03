@@ -79,3 +79,16 @@ export const OBJECTIONS = [
     a: 'Our travellers are largely in their thirties, forties and fifties. Summit night does not care how old you are — it cares whether you trained.',
   },
 ] as const;
+
+/* ── Itinerary summary — wireframe 02.04 ──────────────────────────────────────
+   Phases only. Day counts and the route are not fixed in any supplied document,
+   so nothing here asserts a duration — the shape of the trip is true regardless
+   of which route is finally confirmed. */
+export const ITINERARY = [
+  { phase: 'Arrive',        body: 'Land in Tanzania, meet the group in person for the first time, and get kit checked by people who know what the mountain asks for.' },
+  { phase: 'Optional safari', body: 'The safari extension, if you have taken it — the same local partners, before the climb rather than after.' },
+  { phase: 'Walk in',       body: 'The first days are deliberately, almost comically slow. This is acclimatisation, and going slowly is the whole technique.' },
+  { phase: 'Acclimatise',   body: 'Climb high, sleep low. Daily health checks, oxygen saturation monitored, and honest conversations about how you are actually doing.' },
+  { phase: 'Summit night',  body: 'Leave around midnight, walk in the dark and the cold, and reach the crater rim at sunrise. The longest night of the trip.' },
+  { phase: 'Descend',       body: 'Down is faster and harder on the knees than anyone expects. Then a bed, a shower, and the group you arrived with.' },
+] as const;

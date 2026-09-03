@@ -24,6 +24,8 @@ export default function EnquiryForm({
   prompt,
   submitLabel = 'Send Enquiry',
   travellingAs = false,
+  /** Wireframe 10.03 — routes the enquiry before anyone reads it. */
+  enquiryTypes,
   id = 'enquiry',
 }: {
   endpoint: string;
@@ -33,12 +35,14 @@ export default function EnquiryForm({
   submitLabel?: string;
   /** Show the solo / pair / group qualifier. */
   travellingAs?: boolean;
+  enquiryTypes?: readonly string[];
   id?: string;
 }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [group, setGroup] = useState('');
+  const [kind, setKind] = useState('');
   const [touched, setTouched] = useState(false);
   const { state, submit } = useLeadForm(endpoint);
 
@@ -53,6 +57,7 @@ export default function EnquiryForm({
       email: email.trim(),
       message: message.trim() || undefined,
       travellingAs: group || undefined,
+      enquiryType: kind || undefined,
       trip: tripReference,
     });
   }
@@ -109,6 +114,19 @@ export default function EnquiryForm({
         )}
       </div>
 
+      {enquiryTypes && enquiryTypes.length > 0 && (
+        <div>
+          <label className={LABEL} htmlFor={`${id}-kind`}>What is this about?</label>
+          <select id={`${id}-kind`} value={kind} onChange={(e) => setKind(e.target.value)}
+                  className={`${FIELD} appearance-none cursor-pointer`}>
+            <option value="" className="bg-paper">Choose one</option>
+            {enquiryTypes.map((t) => (
+              <option key={t} value={t} className="bg-paper">{t}</option>
+            ))}
+          </select>
+        </div>
+      )}
+
       {travellingAs && (
         <div>
           <label className={LABEL} htmlFor={`${id}-group`}>Travelling as (optional)</label>
@@ -132,6 +150,12 @@ export default function EnquiryForm({
       </div>
 
       {tripReference && <input type="hidden" name="trip" value={tripReference} />}
+
+      {/* Wireframe 10.05 — plain-language consent, not a checkbox nobody reads */}
+      <p className="font-['Cormorant_Garamond',serif] font-light italic text-[15px] leading-[1.6] text-smoke/85">
+        We use what you send here to reply to you and nothing else. No list, no third
+        parties, no follow-up sequence you have to escape.
+      </p>
 
       {state === 'error' && (
         <p role="alert" className="font-['Kufam',sans-serif] text-[10px] tracking-[0.12em] uppercase text-clay">

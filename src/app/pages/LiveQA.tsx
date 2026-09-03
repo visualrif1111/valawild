@@ -1,11 +1,13 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
-import { Eyebrow, Display, Heading, Body, Lede, Label } from '../components/editorial/Type';
+import { Eyebrow, Display, Heading, Subheading, Body, Lede, Label } from '../components/editorial/Type';
 import { Horizon } from '../components/editorial/Arc';
 import CTAStrip from '../components/cta/CTAStrip';
 import EnquiryForm from '../components/cta/EnquiryForm';
 import { SECONDARY_CTAS } from '../data/ctas';
 import { INTEGRATIONS } from '../data/integrations';
+import { ROUTES } from '../data/site';
+import { Link } from 'react-router';
 
 /* Live Q&A / Events — FS 6.8. Sub-page of Kilimanjaro in Sitemap V2.
    The lower-friction route for people not ready for a 1:1 call. */
@@ -61,6 +63,23 @@ export default function LiveQA() {
         </ul>
       </Section>
 
+      {/* ── Why attend — wireframe 07.04 ─────────────────────────────────── */}
+      <Section width="default">
+        <Eyebrow className="mb-6">Why come</Eyebrow>
+        <Heading className="max-w-2xl">Cheaper than a call, and you can stay muted.</Heading>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+          {WHY.map((w, i) => (
+            <div key={w.title} className="border-t border-ink/12 pt-6">
+              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-moss">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <Subheading className="mt-3 text-[5.5vw] md:text-[22px]">{w.title}</Subheading>
+              <Body className="mt-3">{w.body}</Body>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       <Section width="default">
         <Eyebrow className="mb-6">Register</Eyebrow>
         <Heading>Save your place.</Heading>
@@ -75,6 +94,23 @@ export default function LiveQA() {
         />
       </Section>
 
+      {/* ── Back to the trip — wireframe 07.07 ───────────────────────────── */}
+      <Section width="default">
+        <div className="border border-ink/12 rounded-3xl p-8 md:p-10 bg-cream flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+          <div className="flex-1">
+            <Label className="text-clay">The trip itself</Label>
+            <Subheading className="mt-3">Mount Kilimanjaro</Subheading>
+            <Body className="mt-3 max-w-xl">
+              Facts, itinerary, inclusions, training and the February 2028 founding departure.
+            </Body>
+          </div>
+          <Link to={ROUTES.kilimanjaro}
+            className="shrink-0 inline-flex font-['Kufam',sans-serif] text-[11px] tracking-[0.18em] uppercase bg-clay text-paper rounded-full px-8 py-4 hover:bg-ember transition-all duration-500">
+            Explore Kilimanjaro
+          </Link>
+        </div>
+      </Section>
+
       <CTAStrip
         heading="Would you rather just talk one to one?"
         secondary={[SECONDARY_CTAS.contact, SECONDARY_CTAS.guide]}
@@ -82,3 +118,11 @@ export default function LiveQA() {
     </PageShell>
   );
 }
+
+/* Wireframe 07.04 */
+const WHY = [
+  { title: 'You can stay invisible',   body: 'Camera off, microphone off, questions typed if you prefer. Plenty of people never say a word and still book.' },
+  { title: 'Someone else asks it',     body: 'The question you feel silly asking is usually the one three other people are waiting for.' },
+  { title: 'No follow-up unless you ask', body: 'Registering does not put you on a call list. You will get the invitation and nothing else.' },
+  { title: 'It is Vicky, not a script', body: 'Answers from the person who has climbed it and who will be hosting you, rather than a brochure.' },
+];

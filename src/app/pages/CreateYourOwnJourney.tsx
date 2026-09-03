@@ -1,6 +1,6 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
-import { Eyebrow, Heading, Subheading, Lede, Body, Quote, PosterEyebrow, PosterTitle, PosterLede } from '../components/editorial/Type';
+import { Eyebrow, Heading, Subheading, Lede, Body, Quote, Label, PosterEyebrow, PosterTitle, PosterLede } from '../components/editorial/Type';
 import { PosterBlock, BandRule } from '../components/editorial/Poster';
 import CTAButton from '../components/cta/CTAButton';
 import CTAStrip from '../components/cta/CTAStrip';
@@ -90,6 +90,24 @@ export default function CreateYourOwnJourney() {
         </div>
       </Section>
 
+      {/* ── Journey interest cards — wireframe 03.03 ─────────────────────── */}
+      <Section width="wide">
+        <Eyebrow className="mb-6">What people ask us for</Eyebrow>
+        <Heading className="max-w-2xl">Start from whichever of these sounds like you.</Heading>
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {INTERESTS.map((it) => (
+            <a key={it.title} href="#enquiry"
+              className="group border border-ink/12 rounded-3xl p-7 bg-cream hover:border-moss transition-colors duration-300">
+              <Label className="text-moss">{it.tag}</Label>
+              <Subheading className="mt-3 text-[5.5vw] md:text-[21px] group-hover:text-moss transition-colors duration-300">
+                {it.title}
+              </Subheading>
+              <Body className="mt-3 text-[16px]">{it.body}</Body>
+            </a>
+          ))}
+        </div>
+      </Section>
+
       {/* ── What we handle ─────────────────────────────────────────────── */}
       <Section width="default">
         <Eyebrow className="mb-6">What we actually do</Eyebrow>
@@ -104,6 +122,44 @@ export default function CreateYourOwnJourney() {
                 <Subheading className="text-[5.5vw] md:text-[23px]">{s.title}</Subheading>
                 <Body className="mt-3 max-w-2xl">{s.body}</Body>
               </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── How the process works — wireframe 03.05 ──────────────────────── */}
+      <Section width="default">
+        <Eyebrow className="mb-6">How it works</Eyebrow>
+        <Heading>Four steps, no obligation until the third.</Heading>
+        <ol className="mt-12 flex flex-col gap-10">
+          {PROCESS.map((step, i) => (
+            <li key={step.title} className="flex gap-7 items-start">
+              <span className="font-['Kufam',sans-serif] text-[10px] tracking-[0.2em] text-moss pt-2 shrink-0">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <Subheading className="text-[5.5vw] md:text-[23px]">{step.title}</Subheading>
+                <Body className="mt-2 max-w-2xl">{step.body}</Body>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* ── Example routes — wireframe 03.06 ──────────────────────────────── */}
+      <Section width="wide">
+        <Eyebrow className="mb-6">Shapes we have built before</Eyebrow>
+        <Heading className="max-w-2xl">Examples, not packages.</Heading>
+        <Body className="mt-6 max-w-2xl">
+          Nothing here is a fixed itinerary with a price. They are shapes — starting points
+          to argue with.
+        </Body>
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
+          {ROUTES_EXAMPLES.map((r) => (
+            <div key={r.title} className="border-t-2 border-clay pt-6">
+              <Label className="text-clay">{r.shape}</Label>
+              <Subheading className="mt-3 text-[5.5vw] md:text-[21px]">{r.title}</Subheading>
+              <Body className="mt-3 text-[16px]">{r.body}</Body>
             </div>
           ))}
         </div>
@@ -150,3 +206,28 @@ export default function CreateYourOwnJourney() {
     </PageShell>
   );
 }
+
+/* Wireframe 03.03 — entry points, each landing on the same enquiry form. */
+const INTERESTS = [
+  { tag: 'Family',    title: 'A family safari',        body: 'Two mums, two dads, or one of each — with the room booking confirmed as a family room before you travel.' },
+  { tag: 'Couple',    title: 'Just the two of us',     body: 'A double bed confirmed in writing, and honest advice about where discretion is worth it.' },
+  { tag: 'Friends',   title: 'A group of friends',     body: 'The logistics handled, without the group-chat admin that usually kills the idea.' },
+  { tag: 'Milestone', title: 'Something worth marking', body: 'A birthday, an anniversary, a divorce, a recovery. Reasons to travel that are nobody else’s business.' },
+  { tag: 'Mixed',     title: 'Safari and the mountain', body: 'The Kilimanjaro trek privately rather than as a hosted group, with safari either side.' },
+  { tag: 'Not sure',  title: 'No idea yet',            body: 'Genuinely fine. Most enquiries start as a country and a rough month.' },
+];
+
+/* Wireframe 03.05 */
+const PROCESS = [
+  { title: 'Tell us the shape of it',  body: 'Roughly who, roughly when, and what would make it worth doing. Dates and budget can both be vague.' },
+  { title: 'We come back with options', body: 'Two or three directions, with honest notes on cost, pacing and anything we would flag about travelling as you.' },
+  { title: 'We build it properly',      body: 'Only once you want to go ahead. Accommodation confirmed, rooms confirmed in writing, guides briefed.' },
+  { title: 'You travel, we stay reachable', body: 'A named contact throughout, not a call centre. And an honest debrief afterwards if you want one.' },
+];
+
+/* Wireframe 03.06 — deliberately unpriced. */
+const ROUTES_EXAMPLES = [
+  { shape: 'Around a week',   title: 'Northern circuit safari', body: 'The classic parks at an unhurried pace, with a private vehicle so the day is yours to set.' },
+  { shape: 'Around two weeks', title: 'Safari and Kilimanjaro',  body: 'The mountain privately rather than in a hosted group, with days either side to recover properly.' },
+  { shape: 'Longer',           title: 'Slow Tanzania',           body: 'Fewer places, more nights in each. Built for people who hate being moved on every morning.' },
+];

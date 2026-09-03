@@ -60,6 +60,29 @@ export default function Impact() {
         </Body>
       </Section>
 
+      {/* ── Proof / transparency — wireframe 05.05 ───────────────────────── */}
+      <Section width="default">
+        <Eyebrow className="mb-6">Proof, and where it is missing</Eyebrow>
+        <Heading>What we can show you, and what we can’t yet.</Heading>
+        <Body className="mt-7 max-w-2xl">
+          A commitment nobody can check is a slogan. These are the things we intend to
+          publish, and we would rather list them as pending than imply they already exist.
+        </Body>
+        <div className="mt-12 flex flex-col gap-6">
+          {PROOF.map((p) => (
+            <div key={p.item} className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 border-t border-ink/12 pt-5">
+              <span className={`font-['Kufam',sans-serif] text-[9px] tracking-[0.24em] uppercase shrink-0 w-32 ${
+                p.status === 'Published' ? 'text-moss' : 'text-smoke/70'}`}>
+                {p.status}
+              </span>
+              <span className="font-['Cormorant_Garamond',serif] font-light text-[18px] leading-[1.6] text-ink/85">
+                {p.item}
+              </span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* Sitemap V2 routes Create Your Own Journey from Impact */}
       <Section width="narrow">
         <Eyebrow className="mb-6">Travel with your own people</Eyebrow>
@@ -80,3 +103,14 @@ export default function Impact() {
     </PageShell>
   );
 }
+
+/* Wireframe 05.05. Status is deliberately honest — the 5% figure is committed
+   but the reporting behind it does not exist yet, and saying so is worth more
+   than implying it does. */
+const PROOF = [
+  { status: 'Published',  item: 'The 5% of pre-tax net profit commitment, stated as a figure rather than a gesture.' },
+  { status: 'Published',  item: 'Named local operating partner, used on every journey rather than tendered each season.' },
+  { status: 'To follow',  item: 'Annual figure showing what the 5% amounted to, and who received it.' },
+  { status: 'To follow',  item: 'Mountain crew pay rates, published against the Kilimanjaro porter guidelines.' },
+  { status: 'To follow',  item: 'Proportion of trip spend that stays inside Tanzania.' },
+];

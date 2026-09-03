@@ -69,6 +69,7 @@ export default function Contact() {
             <Eyebrow className="mb-6">Or just ask a question</Eyebrow>
             <EnquiryForm
               endpoint={INTEGRATIONS.endpoints.enquiry}
+              enquiryTypes={ENQUIRY_TYPES}
               travellingAs
               submitLabel="Send Enquiry"
             />
@@ -79,6 +80,32 @@ export default function Contact() {
           </div>
         </div>
       </Section>
+
+      {/* ── Final reassurance — wireframe 10.08 ──────────────────────────── */}
+      <Section width="narrow">
+        <Eyebrow className="mb-6">Before you write</Eyebrow>
+        <Heading className="text-[7vw] md:text-[32px]">There is no wrong question.</Heading>
+        <Body className="mt-6">
+          People apologise to us for asking about money, about fitness, about whether they
+          are too old, about whether it is safe to travel as themselves. None of that needs
+          an apology, and all of it is easier answered than carried around.
+        </Body>
+        <Body className="mt-4">
+          If the honest answer is that this trip is not right for you, you will get that
+          answer — quickly, and without a follow-up sequence.
+        </Body>
+      </Section>
     </PageShell>
   );
 }
+
+/* Wireframe 10.03 — routing categories, in rough order of how often they arrive. */
+const ENQUIRY_TYPES = [
+  'Kilimanjaro — February 2028 departure',
+  'Kilimanjaro — a future departure / waitlist',
+  'Create Your Own Journey — private travel',
+  'Fitness, altitude or training',
+  'Travelling solo',
+  'Safety in Tanzania',
+  'Something else',
+] as const;

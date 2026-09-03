@@ -1,5 +1,6 @@
 import PageShell from '../components/PageShell';
 import Section from '../components/editorial/Section';
+import Accordion from '../components/editorial/Accordion';
 import { Eyebrow, Display, Subheading, Body, Lede } from '../components/editorial/Type';
 import { Horizon } from '../components/editorial/Arc';
 import CTAStrip from '../components/cta/CTAStrip';
@@ -37,6 +38,24 @@ const GROUPS = [
     ],
   },
   {
+    heading: 'The waitlist',
+    items: [
+      { q: 'What does joining the waitlist actually do?', a: 'It tells us you want a 2028 departure that is not February, and it means you hear when the next one is announced before it is public. It is not a booking and it costs nothing.' },
+      { q: 'Does the waitlist give me priority?', a: 'Yes, in the practical sense: waitlist emails go out before anything else. It is not a formal queue and we will not pretend it is.' },
+      { q: 'Can I join the waitlist and also enquire about February?', a: 'Of course. Plenty of people do both while they work out whether the dates are possible.' },
+      { q: 'How often will you email me?', a: 'Rarely. When a departure is announced, and when something genuinely useful exists. You can leave at any time.' },
+    ],
+  },
+  {
+    heading: 'Private and bespoke journeys',
+    items: [
+      { q: 'What if I do not want a group trip at all?', a: 'Then Create Your Own Journey is the route. Private Tanzania travel for couples, families, friends and groups, with the same partners and the same care.' },
+      { q: 'Is a private journey more expensive?', a: 'Usually, yes — you are not sharing a vehicle, a guide or a group booking. How much depends entirely on shape, so we would rather quote than guess.' },
+      { q: 'Can we climb Kilimanjaro privately?', a: 'Yes. The mountain does not have to be a hosted group departure, though you would lose Base Camp and the group that comes with it.' },
+      { q: 'How far ahead do private journeys need booking?', a: 'Less than the hosted departures, but the good accommodation goes early. Talk to us as soon as it is a real idea.' },
+    ],
+  },
+  {
     heading: 'Booking and cost',
     items: [
       { q: 'What does all-inclusive actually cover?', a: 'Accommodation, meals on the mountain, park and permit fees, local crew, transfers, training and hosting. Flights, insurance, visas, personal kit and crew tips are separate.' },
@@ -64,14 +83,7 @@ export default function FAQ() {
       {GROUPS.map((g) => (
         <Section key={g.heading} width="default">
           <Eyebrow className="mb-8">{g.heading}</Eyebrow>
-          <div className="flex flex-col gap-9">
-            {g.items.map((item) => (
-              <div key={item.q} className="border-t border-ink/12 pt-6">
-                <Subheading className="text-[5.5vw] md:text-[22px]">{item.q}</Subheading>
-                <Body className="mt-3 max-w-2xl">{item.a}</Body>
-              </div>
-            ))}
-          </div>
+          <Accordion items={g.items} idPrefix={g.heading.toLowerCase().replace(/[^a-z]+/g, '-')} />
         </Section>
       ))}
 
