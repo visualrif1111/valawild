@@ -10,15 +10,15 @@ import CrowMark from './brand/CrowMark';
 
 export default function Footer() {
   return (
-    <footer className="relative z-[50] w-full bg-ink border-t border-cream/[0.07] pointer-events-auto">
+    <footer className="relative z-[50] w-full bg-cream border-t border-ink/12 pointer-events-auto">
       <div className="max-w-7xl mx-auto px-8 md:px-16 pt-20 pb-10">
 
         {/* Closing ask — the primary CTA is the last thing on every page */}
-        <div className="flex flex-col items-center text-center pb-16 border-b border-cream/[0.07]">
-          <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.34em] uppercase text-ember/70 mb-5">
+        <div className="flex flex-col items-center text-center pb-16 border-b border-ink/12">
+          <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.34em] uppercase text-clay mb-5">
             Still deciding?
           </p>
-          <h2 className="font-['Italiana',serif] text-[8vw] md:text-[36px] leading-[1.15] text-cream tracking-[0.03em] max-w-lg">
+          <h2 className="font-['Italiana',serif] text-[8vw] md:text-[36px] leading-[1.15] text-ink tracking-[0.03em] max-w-lg">
             Fifteen minutes is usually enough to know.
           </h2>
           <div className="mt-8">
@@ -35,13 +35,13 @@ export default function Footer() {
 
           <div className="flex flex-col items-center md:items-start gap-4">
             <Link to={ROUTES.home}
-              className="font-['Italiana',sans-serif] text-2xl text-cream tracking-[0.1em] hover:opacity-75 transition-opacity duration-300">
+              className="font-['Italiana',sans-serif] text-2xl text-ink tracking-[0.1em] hover:opacity-75 transition-opacity duration-300">
               VALA WILD
             </Link>
-            <p className="font-['Cormorant_Garamond',serif] font-light italic text-[15px] leading-[1.6] text-cream/45 max-w-[22rem]">
+            <p className="font-['Cormorant_Garamond',serif] font-light italic text-[15px] leading-[1.6] text-smoke/75 max-w-[22rem]">
               {BRAND.positioning}
             </p>
-            <p className="font-['Kufam',sans-serif] text-[8px] tracking-[0.3em] uppercase text-ember/50 mt-2">
+            <p className="font-['Kufam',sans-serif] text-[8px] tracking-[0.3em] uppercase text-clay mt-2">
               {BRAND.creativeLine}
             </p>
           </div>
@@ -50,12 +50,12 @@ export default function Footer() {
             {FOOTER_NAV.map((item) => (
               <div key={item.to} className="flex flex-col gap-3 text-center md:text-left">
                 <Link to={item.to}
-                  className="font-['Kufam',sans-serif] text-[11px] tracking-[0.16em] uppercase text-cream/70 hover:text-cream transition-colors duration-300">
+                  className="font-['Kufam',sans-serif] text-[11px] tracking-[0.16em] uppercase text-smoke hover:text-ink transition-colors duration-300">
                   {item.label}
                 </Link>
                 {item.children?.map((child) => (
                   <Link key={child.to} to={child.to}
-                    className="font-['Kufam',sans-serif] text-[10px] tracking-[0.14em] uppercase text-cream/35 hover:text-ember transition-colors duration-300">
+                    className="font-['Kufam',sans-serif] text-[10px] tracking-[0.14em] uppercase text-smoke/70 hover:text-clay transition-colors duration-300">
                     {child.label}
                   </Link>
                 ))}
@@ -64,20 +64,20 @@ export default function Footer() {
           </nav>
 
           <div className="flex flex-col items-center md:items-end gap-4">
-            <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.32em] uppercase text-cream/30">
+            <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.32em] uppercase text-smoke/70">
               Get in Touch
             </p>
             <a href={`mailto:${BRAND.email}`}
-              className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-cream/60 border-b border-cream/20 pb-0.5 hover:text-cream hover:border-ember transition-all duration-300">
+              className="font-['Kufam',sans-serif] text-[11px] tracking-[0.14em] uppercase text-smoke/90 border-b border-ink/20 pb-0.5 hover:text-ink hover:border-clay transition-all duration-300">
               {BRAND.email}
             </a>
-            <div className="flex items-center gap-6 text-cream/40 mt-2">
-              <a href="#" aria-label="Instagram" className="hover:text-ember transition-colors duration-300 w-4 h-4">
+            <div className="flex items-center gap-6 text-smoke/75 mt-2">
+              <a href="#" aria-label="Instagram" className="hover:text-clay transition-colors duration-300 w-4 h-4">
                 <svg className="block w-full h-full" fill="none" viewBox="0 0 14 14">
                   <path d={svgPaths.p2a4356c0} fill="currentColor" />
                 </svg>
               </a>
-              <a href="#" aria-label="TikTok" className="hover:text-ember transition-colors duration-300 w-4 h-4">
+              <a href="#" aria-label="TikTok" className="hover:text-clay transition-colors duration-300 w-4 h-4">
                 <svg className="block w-full h-full" fill="none" viewBox="0 0 15 15">
                   <path d={svgPaths.pf8e4980} fill="currentColor" />
                 </svg>
@@ -86,14 +86,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="w-full h-px bg-cream/[0.07] my-10" />
+        <div className="w-full h-px bg-ink/12 my-10" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.22em] uppercase text-cream/25">
+          <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.22em] uppercase text-smoke/60">
             © {new Date().getFullYear()} Vala Wild. All rights reserved.
           </p>
-          <p className="font-['Cormorant_Garamond',serif] italic font-light text-[13px] text-cream/20 flex items-center gap-2.5">
-            <CrowMark size={16} className="text-cream/25" />
+          <p className="font-['Cormorant_Garamond',serif] italic font-light text-[13px] text-smoke/60 flex items-center gap-2.5">
+            <CrowMark size={16} className="text-ink/40" />
             {BRAND.aside}
           </p>
         </div>
