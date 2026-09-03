@@ -3,6 +3,7 @@ import svgPaths from '../../imports/Frame74/svg-1cztk30jkf';
 import { FOOTER_NAV, BRAND, ROUTES } from '../data/site';
 import { PRIMARY_CTA, SECONDARY_CTAS } from '../data/ctas';
 import CTAButton from './cta/CTAButton';
+import CrowMark from './brand/CrowMark';
 
 /* Footer tree mirrors Sitemap V2 exactly, including the nesting:
    Kilimanjaro → Live Q&A / Events, Base Camp   ·   Impact → Create Your Own Journey */
@@ -91,7 +92,8 @@ export default function Footer() {
           <p className="font-['Kufam',sans-serif] text-[9px] tracking-[0.22em] uppercase text-cream/25">
             © {new Date().getFullYear()} Vala Wild. All rights reserved.
           </p>
-          <p className="font-['Cormorant_Garamond',serif] italic font-light text-[13px] text-cream/20">
+          <p className="font-['Cormorant_Garamond',serif] italic font-light text-[13px] text-cream/20 flex items-center gap-2.5">
+            <CrowMark size={16} className="text-cream/25" />
             {BRAND.aside}
           </p>
         </div>
