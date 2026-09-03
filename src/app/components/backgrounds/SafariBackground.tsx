@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion } from 'motion/react';
 
 // Precomputed dust particle data — deterministic values prevent Math.random()
 // in render which caused particles to jump position on every re-render
@@ -15,15 +15,43 @@ const DUST_DATA = Array.from({ length: 20 }, (_, i) => ({
   dur:     15  + (i * 1.73) % 10,
   delay:   (i * 1.41) % 10,
 }));
-import ValaWildSafari from '../../../imports/ValaWildSafari/index';
-import Visualrif2 from '../../../imports/Visualrif2222221/index';
-import Visualrif3 from '../../../imports/Visualrif333333331/index';
-import Frame63 from '../../../imports/Frame63/index';
-import Frame66 from '../../../imports/Frame66/index';
-import Frame65 from '../../../imports/Frame65/index';
-import Frame68 from '../../../imports/Frame68/index';
-import Frame70 from '../../../imports/Frame70-1/index';
-import Frame73 from '../../../imports/Frame73/index';
+/* ── Scene artwork ──────────────────────────────────────────────────────────
+   These nine scenes were Figma exports rendered as inline SVG — ~9.3 MB of
+   path data and, for one scene alone, 5,742 <path> elements in the DOM. They
+   are now rasterised to WebP (~460 KB total), captured at the exact wrapper
+   geometry these layers compose to on a 1920x1080 desktop.
+
+   Trade-off: the source layers were fixed-pixel canvases inside viewport-
+   relative wrappers, so their composition shifted with screen size. The
+   raster is scaled with object-cover instead — steadier, and ~95% lighter.
+   Regenerate via the capture harness in git history if the art changes.
+   ────────────────────────────────────────────────────────────────────────── */
+import sceneSafari     from '../../../assets/scenes/vala-wild-safari.webp';
+import sceneVisualrif2 from '../../../assets/scenes/visualrif2.webp';
+import sceneVisualrif3 from '../../../assets/scenes/visualrif3.webp';
+import scene63         from '../../../assets/scenes/frame63.webp';
+import scene66         from '../../../assets/scenes/frame66.webp';
+import scene65         from '../../../assets/scenes/frame65.webp';
+import scene68         from '../../../assets/scenes/frame68.webp';
+import scene70         from '../../../assets/scenes/frame70.webp';
+import scene73         from '../../../assets/scenes/frame73.webp';
+
+/* Scene layer. eager/high for the first, lazy for the rest — only the opening
+   scene is on screen at load. */
+function Scene({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      draggable={false}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding="async"
+      // @ts-expect-error fetchpriority is valid HTML, not yet in React 18 types
+      fetchpriority={priority ? 'high' : 'low'}
+      className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+    />
+  );
+}
 
 export default function SafariBackground() {
   const { scrollYProgress } = useScroll({ offset: ["start start", "end end"] });
@@ -31,12 +59,16 @@ export default function SafariBackground() {
   // ── Spring-smoothed scroll — cinematic inertia on desktop, tight on mobile ──
   // Mobile spring settles in ~150 ms (near-critically damped); desktop drifts ~1 s.
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  const dustParticles = isMobile ? DUST_DATA.slice(0, 6) : DUST_DATA;
-  const scrollYSmooth = useSpring(scrollYProgress,
+  // Decorative motion only — scroll-driven scene visibility must keep working,
+  // or the story beats would all render on top of each other.
+  const reduce = useReducedMotion();
+  const dustParticles = reduce ? [] : isMobile ? DUST_DATA.slice(0, 6) : DUST_DATA;
+  const scrollYSpring = useSpring(scrollYProgress,
     isMobile
       ? { damping: 30, stiffness: 400, mass: 0.6 }
       : { damping: 20, stiffness: 65,  mass: 0.8 }
   );
+  const scrollYSmooth = reduce ? scrollYProgress : scrollYSpring;
 
   // ── Scene stack scrolls through via spring (smooth momentum) ────────────────
   const yStack = useTransform(scrollYSmooth, [0, 1], ["0vh", "-800vh"]);
@@ -75,9 +107,10 @@ export default function SafariBackground() {
       mouseX.set(e.clientX / window.innerWidth);
       mouseY.set(e.clientY / window.innerHeight);
     };
+    if (reduce) return;
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, reduce]);
   const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 400 });
   const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 400 });
   const parallaxX_bg  = useTransform(smoothMouseX, [0, 1], ["-1%",  "1%"]);
@@ -106,7 +139,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg1 }} className="absolute top-0 left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg1 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,84.1vh)] h-[max(100vh,118.8vw)]">
-                  <ValaWildSafari />
+                  <Scene src={sceneSafari} alt="Kilimanjaro rising over the savannah at dawn" priority />
                 </div>
               </motion.div>
               <div className="absolute bottom-0 w-full h-[50vh] bg-gradient-to-t from-[#2A0F0A] to-transparent z-10" />
@@ -116,7 +149,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg2 }} className="absolute top-[100vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg2 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,58.2vh)] h-[max(100vh,171.6vw)]">
-                  <Visualrif2 />
+                  <Scene src={sceneVisualrif2} alt="Open plains under a wide sky" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -127,7 +160,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg3 }} className="absolute top-[200vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg3 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,58.2vh)] h-[max(100vh,171.6vw)]">
-                  <Visualrif3 />
+                  <Scene src={sceneVisualrif3} alt="Grassland at golden hour" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -138,7 +171,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg4 }} className="absolute top-[300vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg4 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,139.8vh)] h-[max(100vh,71.5vw)]">
-                  <Frame63 />
+                  <Scene src={scene63} alt="Acacia silhouettes on the horizon" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -149,7 +182,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg5 }} className="absolute top-[400vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg5 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,66.9vh)] h-[max(100vh,149.5vw)]">
-                  <Frame66 />
+                  <Scene src={scene66} alt="Herd moving across the plain" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -160,7 +193,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg6 }} className="absolute top-[500vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg6 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,66.9vh)] h-[max(100vh,149.5vw)]">
-                  <Frame65 />
+                  <Scene src={scene65} alt="Dusk settling over the escarpment" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -171,7 +204,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg7 }} className="absolute top-[600vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg7 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,61.2vh)] h-[max(100vh,163.4vw)]">
-                  <Frame68 />
+                  <Scene src={scene68} alt="Nightfall on the savannah" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -182,7 +215,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg8 }} className="absolute top-[700vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg8 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,61.2vh)] h-[max(100vh,163.4vw)]">
-                  <Frame70 />
+                  <Scene src={scene70} alt="Starlight over the plains" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />
@@ -193,7 +226,7 @@ export default function SafariBackground() {
             <motion.div style={{ display: displayBg9 }} className="absolute top-[800vh] left-0 w-full h-[100vh] items-center justify-center overflow-hidden">
               <motion.div style={{ scale: scaleBg9 }} className="absolute inset-0 flex items-center justify-center will-change-transform">
                 <div className="relative flex-shrink-0 w-[max(100vw,132.2vh)] h-[max(100vh,75.6vw)]">
-                  <Frame73 />
+                  <Scene src={scene73} alt="Elephants beneath an acacia at night" />
                 </div>
               </motion.div>
               <div className="absolute top-0 w-full h-[50vh] bg-gradient-to-b from-[#2A0F0A] to-transparent z-10" />

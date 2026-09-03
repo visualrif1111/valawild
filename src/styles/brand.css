@@ -1,0 +1,102 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   VALA WILD — BRAND SYSTEM
+   "Retro-futurism visually; optimism emotionally."
+
+   70s/80s warmth + retro-futurism + curves + sacred geometry
+   + real adventure photography + subtle queer humour.
+
+   Sits on top of theme.css. theme.css carries the shadcn/ui primitives that
+   components/ui/* depend on — do not remove it. This file defines the Vala
+   palette, type and form language, and wins where the two overlap.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* ── Grounds — warm blacks. Never blue-black, never synthetic. ─────────── */
+  --color-ink:      #100C09;
+  --color-soot:     #1A1410;
+  --color-tobacco:  #2E241C;
+  --color-bark:     #45362A;
+
+  /* ── Papers — sun-bleached, analogue. ─────────────────────────────────── */
+  --color-paper:    #FBF4E9;
+  --color-cream:    #F4EADA;
+  --color-sand:     #DCC7A8;
+  --color-dust:     #B8A48A;
+
+  /* ── Sun — the primary accent. Faded orange, not neon. ────────────────── */
+  --color-ember:    #D4693A;
+  --color-flare:    #E88C4D;
+  --color-peach:    #F2B98E;
+  --color-clay:     #A94E27;
+  --color-brass:    #C9A34E;
+
+  /* ── Earth — grounding greens. ────────────────────────────────────────── */
+  --color-moss:     #4E5F49;
+  --color-fern:     #6E8163;
+  --color-sage:     #9AA88C;
+
+  /* ── Muted warm neutrals. ─────────────────────────────────────────────── */
+  --color-dusk:     #7A6A5C;
+  --color-smoke:    #574A3F;
+
+  /* ── Typography ───────────────────────────────────────────────────────── */
+  --font-display:   'Italiana', serif;      /* headlines, brand voice        */
+  --font-body:      'Cormorant Garamond', serif; /* editorial reading copy   */
+  --font-label:     'Kufam', sans-serif;    /* eyebrows, labels, CTAs        */
+
+  /* ── Retro-futurist form language ─────────────────────────────────────── */
+  /* Curves, arcs and horizons — geometry should feel sensual, not mechanical */
+  --radius-arc:     9999px;
+  --radius-soft:    1.25rem;
+  --radius-lens:    50% 50% 50% 50% / 60% 60% 40% 40%;
+
+  /* ── Motion — unhurried, optimistic. ──────────────────────────────────── */
+  --ease-warm:      cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-arc:       cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ── Semantic aliases ───────────────────────────────────────────────────── */
+:root {
+  --vala-surface:        var(--color-ink);
+  --vala-surface-raised: var(--color-soot);
+  --vala-on-surface:     var(--color-cream);
+  --vala-muted:          var(--color-dusk);
+  --vala-line:           rgba(244, 234, 218, 0.14);
+  --vala-accent:         var(--color-ember);
+
+  /* Golden ratio — for sacred-geometry composition */
+  --phi: 1.618;
+}
+
+/* ── Chrome heights ─────────────────────────────────────────────────────────
+   The scrolled navigation bar's height, published so page-level sticky
+   sub-navs (e.g. the Kilimanjaro anchor bar) can offset beneath it instead of
+   colliding with it, and so anchor targets clear both bars.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --vw-nav-h: 64px;
+  --vw-subnav-h: 52px;
+}
+
+@media (min-width: 768px) {
+  :root { --vw-nav-h: 76px; }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────────
+   Component-level motion is gated with useReducedMotion (see the background
+   and App components). This catches the rest: CSS transitions, and any
+   animation that would otherwise loop indefinitely.
+
+   Durations are near-zero rather than zero so transition-end handlers still
+   fire and nothing gets stuck waiting for an event that never arrives.
+   ───────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

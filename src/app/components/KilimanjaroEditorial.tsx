@@ -241,7 +241,7 @@ export default function KilimanjaroEditorial() {
             <stop offset="0%"   stopColor="#A8CCE8" stopOpacity="0.22" />
             <stop offset="100%" stopColor="#A8CCE8" stopOpacity="0.02" />
           </linearGradient>
-          <filter id="kblur"><feGaussianBlur stdDeviation="0.6" /></filter>
+          <filter id="kblur" filterUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><feGaussianBlur stdDeviation="0.6" /></filter>
         </defs>
         {/* Glow halo */}
         <path d={PATH} stroke="url(#kglow)" strokeWidth="10" fill="none" filter="url(#kblur)" />
